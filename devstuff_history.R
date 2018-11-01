@@ -25,5 +25,5 @@ attachment::att_to_description()
 usethis::use_tidy_description()
 
 # For tests
-#usethis::use_testthat()
-#usethis::use_test("app")
+usethis::use_testthat()
+usethis::use_test("scan_distributions")

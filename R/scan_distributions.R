@@ -30,7 +30,7 @@ scan_distributions <- function(data) {
   skewness <- sapply(numdata, .get_skewness)
 
   #As dataframe
-  dstats <- t(rbind.data.frame(qu, iqr, madm, rmadm, skewness))
+  dstats <- as.data.frame(t(rbind.data.frame(qu, iqr, madm, rmadm, skewness)))
   colnames(dstats) <- c("Min", "Q1", "Q2", "Q3", "Max", "IQR", "MADM", "MADM/Q2", "Skewness")
 
   #return
