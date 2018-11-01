@@ -12,3 +12,10 @@ usethis::use_code_of_conduct()
 
 # Versionning
 usethis::use_git()
+
+#Badge
+usethis::use_lifecycle_badge("Experimental")
+# with continuous integration
+usethis::use_travis()
+usethis::use_appveyor()
+usethis::use_coverage()

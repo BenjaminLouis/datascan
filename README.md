@@ -1,3 +1,8 @@
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis build status](https://travis-ci.org/BenjaminLouis/datascan.svg?branch=master)](https://travis-ci.org/BenjaminLouis/datascan)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/BenjaminLouis/datascan?branch=master&svg=true)](https://ci.appveyor.com/project/BenjaminLouis/datascan)
+[![Coverage status](https://codecov.io/gh/BenjaminLouis/datascan/branch/master/graph/badge.svg)](https://codecov.io/github/BenjaminLouis/datascan?branch=master)
+
 # Package {datascan}
 
 The goal of datascan is to offer tools to perform the most important step of data analysis : exploratory data analysis. Implemented functions return relevant statistics and graphics about variables present in a data table.
