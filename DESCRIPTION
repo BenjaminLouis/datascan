@@ -2,8 +2,10 @@ Package: datascan
 Title: Tools to perform exploratory data analysis (EDA)
 Version: 0.0.0.9000
 Authors@R: person("Benjamin", "Louis", email = "contact@benjaminlouis-stat.fr", role = c("aut", "cre"))
-Description: This package implements some tools to perform the most important step of data analysis : exploratory data analysis. The functions return relevant statistics and graphics about variables present in a data table.
+Description: This package implements some tools to perform one of the most important step of data analysis : exploratory data analysis. The functions return relevant statistics and graphics about variables present in a data table.
 License: MIT + file LICENSE
+URL: https://github.com/BenjaminLouis/datascan
+BugReports: https://github.com/BenjaminLouis/datascan/issues
 Encoding: UTF-8
 LazyData: true
 Suggests: 
