@@ -19,3 +19,11 @@ usethis::use_lifecycle_badge("Experimental")
 usethis::use_travis()
 usethis::use_appveyor()
 usethis::use_coverage()
+
+#dependencies
+attachment::att_to_description()
+usethis::use_tidy_description()
+
+# For tests
+#usethis::use_testthat()
+#usethis::use_test("app")

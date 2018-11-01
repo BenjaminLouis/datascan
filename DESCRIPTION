@@ -6,7 +6,13 @@ Description: This package implements some tools to perform one of the most impor
 License: MIT + file LICENSE
 URL: https://github.com/BenjaminLouis/datascan
 BugReports: https://github.com/BenjaminLouis/datascan/issues
+Imports: 
+    dplyr,
+    stats
+Suggests: 
+    covr,
+    knitr,
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
-Suggests: 
-    covr
+RoxygenNote: 6.0.1

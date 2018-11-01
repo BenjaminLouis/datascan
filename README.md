@@ -5,7 +5,7 @@
 
 # Package {datascan}
 
-The goal of datascan is to offer tools to perform the most important step of data analysis : exploratory data analysis. Implemented functions return relevant statistics and graphics about variables present in a data table.
+The goal of datascan is to offer tools to perform one of the most important step of data analysis : exploratory data analysis. Implemented functions return relevant statistics and graphics about variables present in a data table.
 
 ## Installation
 
