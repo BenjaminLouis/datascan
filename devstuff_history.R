@@ -21,6 +21,7 @@ usethis::use_appveyor()
 usethis::use_coverage()
 
 #dependencies
+usethis::use_pipe()
 attachment::att_to_description()
 usethis::use_tidy_description()
 

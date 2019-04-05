@@ -3,7 +3,7 @@
 #' @param data a data.frame
 #'
 #' @return a data.frame with one row for each numeric variables in \code{data} with
-#' minimum (\code{Min}) and maximum (\code{Max}) values, maximum value, 1st, 2nd
+#' minimum (\code{Min}) and maximum (\code{Max}) values, 1st, 2nd
 #' and 3rd quartiles (\code{Q1}, \code{Q2}, \code{Q3}), interquartile range value (IQR), median absolute deviation
 #' from the median (\code{MADM}), MADM to median ratio (\code{MADM/Q2}) and skewness
 #'
