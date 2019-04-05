@@ -18,5 +18,5 @@ a list of ggplot objects
 Get and Visualise distribution of all numeric column in a data frame
 }
 \examples{
-vis_numerics(rnorm(100))
+vis_numerics_all(iris)
 }

@@ -19,7 +19,7 @@ vis_numerics_all <- function(.data, .plot = TRUE) {
   # Get the distr
   ggplist <- mapply(vis_numerics, .num = numdata, .labx = names(numdata), SIMPLIFY = FALSE)
   # plot
-  if (.plot) { lapply(ggp, plot) }
+  if (.plot) { lapply(ggplist, plot) }
   # return the distr
   return(ggplist)
 }

@@ -14,6 +14,8 @@
 #' @examples
 #' vis_numerics(rnorm(100))
 vis_numerics <- function(.num, .labx = "", .bins = .get_bins(.num), .plot = TRUE) {
+  # Test if numeric
+  if (!is.numeric(.num)) {stop(".num should be a numeric vector")}
   # Remove NAs
   .num <- .num[!is.na(.num)]
   # Get the plot
@@ -26,7 +28,7 @@ vis_numerics <- function(.num, .labx = "", .bins = .get_bins(.num), .plot = TRUE
           axis.text = element_text(face = "bold", size = 10))  +
     scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
     scale_fill_viridis_d(option = "E")
-  # plot
+  # Plot
   if (.plot) { plot(ggp) }
   # Return plot
   return(ggp)
