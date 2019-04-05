@@ -14,8 +14,8 @@
 #'
 #' @examples
 #' data(iris)
-#' scan_distributions(iris)
-scan_distributions <- function(.data) {
+#' scan_numerics(iris)
+scan_numerics <- function(.data) {
 
   # Selection of numeric variables
   numdata <- select_if(.data, is.numeric)

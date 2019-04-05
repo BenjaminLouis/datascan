@@ -1,14 +1,14 @@
-context("test-scan_distributions.R")
+context("test-scan_numerics.R")
 
-test_that("scan-distributions works", {
+test_that("scan-numerics works", {
 
   data(iris)
 
   # Test if there are numeric variables
-  res <- scan_distributions(iris)
+  res <- scan_numerics(iris)
   expect_is(res, class = "data.frame")
 
   # Test if there is not numeric variable
-  expect_error(scan_distributions(iris["Species"]),
+  expect_error(scan_numerics(iris["Species"]),
                "No numeric variables found")
 })
