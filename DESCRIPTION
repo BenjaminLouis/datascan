@@ -1,15 +1,22 @@
 Package: datascan
 Title: Tools to perform exploratory data analysis (EDA)
 Version: 0.0.0.9000
-Authors@R: person("Benjamin", "Louis", email = "contact@benjaminlouis-stat.fr", role = c("aut", "cre"))
-Description: This package implements some tools to perform one of the most important step of data analysis : exploratory data analysis. The functions return relevant statistics and graphics about variables present in a data table.
+Authors@R: 
+    person(given = "Benjamin",
+           family = "Louis",
+           role = c("aut", "cre"),
+           email = "contact@benjaminlouis-stat.fr")
+Description: This package implements some tools to perform
+    one of the most important step of data analysis : exploratory data
+    analysis. The functions return relevant statistics and graphics about
+    variables present in a data table.
 License: MIT + file LICENSE
 URL: https://github.com/BenjaminLouis/datascan
 BugReports: https://github.com/BenjaminLouis/datascan/issues
 Imports: 
     dplyr,
-    stats,
-    magrittr
+    magrittr,
+    stats
 Suggests: 
     covr,
     knitr,
@@ -18,3 +25,4 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
+VignetteBuilder: knitr

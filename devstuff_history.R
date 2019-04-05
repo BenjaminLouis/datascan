@@ -20,6 +20,9 @@ usethis::use_travis()
 usethis::use_appveyor()
 usethis::use_coverage()
 
+# Vignettes
+usethis::use_vignette("datascan_utilisation")
+
 #dependencies
 usethis::use_pipe()
 attachment::att_to_description()
