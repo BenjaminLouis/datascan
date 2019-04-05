@@ -1,6 +1,6 @@
 #' Gives some statistics about numeric data distributions
 #'
-#' @param data a data.frame
+#' @param .data a data.frame
 #'
 #' @return a data.frame with one row for each numeric variables in \code{data} with
 #' minimum (\code{Min}) and maximum (\code{Max}) values, 1st, 2nd
@@ -15,10 +15,10 @@
 #' @examples
 #' data(iris)
 #' scan_distributions(iris)
-scan_distributions <- function(data) {
+scan_distributions <- function(.data) {
 
   # Selection of numeric variables
-  numdata <- select_if(data, is.numeric)
+  numdata <- select_if(.data, is.numeric)
   # There should be numeric variables
   if (ncol(numdata) == 0) {stop("No numeric variables found")}
 
