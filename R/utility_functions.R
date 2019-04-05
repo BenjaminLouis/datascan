@@ -26,8 +26,8 @@ NULL
 #' @rdname utils
 #' @export
 #' @examples
-#' .get_bins()
-get_bins <- function(.num) {
+#' .get_bins(rnorm(100))
+.get_bins <- function(.num) {
   .num <- .num[!is.na(.num)]
   floor(1.5*length(.num)/10) %>% min(30) %>% max(10)
 }

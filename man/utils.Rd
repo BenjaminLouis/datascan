@@ -4,11 +4,14 @@
 \alias{utils}
 \alias{.get_madm}
 \alias{.get_skewness}
+\alias{.get_bins}
 \title{Some internals functions}
 \usage{
 .get_madm(.num)
 
 .get_skewness(.num)
+
+.get_bins(.num)
 }
 \arguments{
 \item{.num}{a numeric vector}
@@ -19,4 +22,5 @@ Some internals functions
 \examples{
 .get_madm(rnorm(100))
 .get_skewness(rnorm(100))
+.get_bins(rnorm(100))
 }
