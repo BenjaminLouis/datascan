@@ -10,7 +10,7 @@
 #' @importFrom graphics plot
 #'
 #' @examples
-#' vis_numerics(rnorm(100))
+#' vis_numerics_all(iris)
 vis_numerics_all <- function(.data, .plot = TRUE) {
   # Select numeric columns
   numdata <- select_if(.data, is.numeric)
