@@ -30,4 +30,6 @@ usethis::use_tidy_description()
 
 # For tests
 usethis::use_testthat()
-usethis::use_test("scan_distributions")
+usethis::use_test("scan_numerics")
+usethis::use_test("vis_numerics")
+usethis::use_test("vis_numerics_all")
