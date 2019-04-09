@@ -1,4 +1,5 @@
 #' Some internals functions
+#' @param .data a data frame
 #' @param .num a numeric vector
 #' @param .cat a categorical vector
 #' @param .cat1 a categorical vector
@@ -36,6 +37,7 @@ NULL
 }
 
 #' @rdname utils
+#' @importFrom stats chisq.test
 #' @export
 #' @examples
 #' #todo
@@ -61,11 +63,12 @@ NULL
 }
 
 #' @rdname utils
+#' @importFrom stats lm as.formula na.omit
 #' @export
 #' @examples
 #' #todo
 .get_r <- function(.data, .cat, .num) {
-  mod <- lm(form = as.formula(paste0(.num, "~", .cat)), data = .data, na.action = na.omit)
+  mod <- lm(formula = as.formula(paste0(.num, "~", .cat)), data = .data, na.action = na.omit)
   sqrt(summary(mod)$r.squared)
 }
 

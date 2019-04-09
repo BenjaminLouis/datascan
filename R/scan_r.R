@@ -14,14 +14,14 @@
 #' vis_r(dplyr::starwars)
 scan_r <- function(.data) {
   quanti <- .data %>%
-    dplyr::select_if(is.numeric) %>%
+    select_if(is.numeric) %>%
     colnames()
   quali <- .data %>%
-    dplyr::select_if(function(x) !is.numeric(x) & !is.list(x)) %>%
+    select_if(function(x) !is.numeric(x) & !is.list(x)) %>%
     colnames()
   df <- .data
-  result <- tidyr::crossing(Num = quanti, Cat = quali) %>%
-    dplyr::mutate(r = purrr::map2_dbl(Cat, Num, .get_r, .data = df))
+  result <- crossing(Num = quanti, Cat = quali) %>%
+    mutate(r = map2_dbl(Cat, Num, .get_r, .data = df))
   return(result)
 }
 

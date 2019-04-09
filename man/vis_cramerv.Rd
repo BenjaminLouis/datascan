@@ -16,5 +16,5 @@ a ggplot
 Plot bias corrected Cramer's V for all pairs of categorical columns
 }
 \examples{
-vis_cramerv(starwars)
+vis_cramerv(dplyr::starwars)
 }

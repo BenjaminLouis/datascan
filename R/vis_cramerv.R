@@ -8,7 +8,7 @@
 #' @importFrom ggplot2 ggplot aes geom_tile theme_classic theme element_blank element_text scale_fill_viridis_c scale_y_discrete scale_x_discrete labs
 #'
 #' @examples
-#' vis_cramerv(starwars)
+#' vis_cramerv(dplyr::starwars)
 
 vis_cramerv <- function(.data) {
   result <- scan_cramerv(.data)

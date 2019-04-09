@@ -11,7 +11,7 @@
 #' @importFrom tidyr crossing
 #'
 #' @examples
-#' scan_cramerv(starwars)
+#' scan_cramerv(dplyr::starwars)
 
 scan_cramerv <- function(.data) {
 

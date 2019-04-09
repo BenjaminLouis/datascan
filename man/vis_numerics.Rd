@@ -2,25 +2,21 @@
 % Please edit documentation in R/vis_numerics.R
 \name{vis_numerics}
 \alias{vis_numerics}
-\title{Get and Visualise distribution of a numeric vector}
+\title{Get and Visualise distribution of all numeric column in a data frame}
 \usage{
-vis_numerics(.num, .labx = "", .bins = .get_bins(.num), .plot = TRUE)
+vis_numerics(.data, .plot = TRUE)
 }
 \arguments{
-\item{.num}{a numeric vector}
-
-\item{.labx}{label of x-axix}
-
-\item{.bins}{bins argument for \code{geom_histogram}}
+\item{.data}{a data frame}
 
 \item{.plot}{if \code{TRUE} the plot is displayed}
 }
 \value{
-a ggplot object
+a list of ggplot objects
 }
 \description{
-Get and Visualise distribution of a numeric vector
+Get and Visualise distribution of all numeric column in a data frame
 }
 \examples{
-vis_numerics(rnorm(100))
+vis_numerics(iris)
 }

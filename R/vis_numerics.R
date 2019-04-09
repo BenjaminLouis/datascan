@@ -17,7 +17,7 @@ vis_numerics <- function(.data, .plot = TRUE) {
   # There should be numeric colmns
   if (ncol(numdata) == 0) {stop("No numeric columns found")}
   # Get the distr
-  ggplist <- mapply(vis_numerics, .num = numdata, .labx = names(numdata), SIMPLIFY = FALSE)
+  ggplist <- mapply(vis_num, .num = numdata, .labx = names(numdata), SIMPLIFY = FALSE)
   # plot
   if (.plot) { lapply(ggplist, plot) }
   # return the distr

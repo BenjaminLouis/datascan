@@ -26,6 +26,8 @@
 
 \item{.cat2}{a categorical vector}
 
+\item{.data}{a data frame}
+
 \item{.cat}{a categorical vector}
 }
 \description{
