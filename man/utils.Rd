@@ -5,6 +5,8 @@
 \alias{.get_madm}
 \alias{.get_skewness}
 \alias{.get_bins}
+\alias{.get_cramerv}
+\alias{.get_r}
 \title{Some internals functions}
 \usage{
 .get_madm(.num)
@@ -12,9 +14,19 @@
 .get_skewness(.num)
 
 .get_bins(.num)
+
+.get_cramerv(.cat1, .cat2)
+
+.get_r(.data, .cat, .num)
 }
 \arguments{
 \item{.num}{a numeric vector}
+
+\item{.cat1}{a categorical vector}
+
+\item{.cat2}{a categorical vector}
+
+\item{.cat}{a categorical vector}
 }
 \description{
 Some internals functions
@@ -23,4 +35,6 @@ Some internals functions
 .get_madm(rnorm(100))
 .get_skewness(rnorm(100))
 .get_bins(rnorm(100))
+#todo
+#todo
 }
