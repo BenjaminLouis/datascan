@@ -7,7 +7,8 @@ vis_grp <- function(.cat, .labx = "") {
 
   ggp <- ggplot(df, aes(x = reorder(var, Freq), y = Freq, fill = var)) +
     geom_bar(show.legend = FALSE,
-             stat = "identity") +
+             stat = "identity",
+             color = "#555555") +
     labs(x = .labx, y = "Count") +
     theme_classic() +
     theme(axis.title = element_text(face = "bold", size = 12),

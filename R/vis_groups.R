@@ -1,3 +1,4 @@
+
 vis_groups <- function(.data) {
   # Select cat columns
   catdata <- select_if(.data, ~!is.numeric(.x) & !is.list(.x))
