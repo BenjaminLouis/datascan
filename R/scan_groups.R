@@ -9,7 +9,7 @@
 #'
 #' @export
 #'
-#' @importFrom dplyr select_if %>% group_by count mutate
+#' @importFrom dplyr select_if group_by count mutate
 #' @importFrom tidyr gather
 #'
 #' @examples
