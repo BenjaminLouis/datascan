@@ -19,6 +19,7 @@ Imports:
     magrittr,
     purrr,
     stats,
+    tibble,
     tidyr
 Suggests: 
     covr,
