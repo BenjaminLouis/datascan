@@ -74,3 +74,18 @@ NULL
   sqrt(summary(mod)$r.squared)
 }
 
+#' @rdname utils
+#' @importFrom stats setNames
+#' @export
+#' @examples
+#' library(dplyr)
+#' .transform_cat(starwars$species)
+#' .transform_cat(starwars$gender)
+.transform_cat <- function(.cat) {
+  tt <- table(.cat, useNA = "ifany")
+  ok <- names(tt[tt >= 5])
+  nas <- if (any(is.na(ok))) {NA_character_} else {"Other"}
+  ok <- ok[!is.na(ok)]
+  reco <- setNames(ok, ok)
+  recode(.cat, !!!reco, .default = "Others groups", .missing = nas)
+}
