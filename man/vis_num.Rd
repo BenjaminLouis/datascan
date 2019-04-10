@@ -4,7 +4,7 @@
 \alias{vis_num}
 \title{Get and Visualise distribution of a numeric vector}
 \usage{
-vis_num(.num, .labx = "", .bins = .get_bins(.num), .plot = TRUE)
+vis_num(.num, .labx = "", .bins = .get_bins(.num))
 }
 \arguments{
 \item{.num}{a numeric vector}
@@ -12,8 +12,6 @@ vis_num(.num, .labx = "", .bins = .get_bins(.num), .plot = TRUE)
 \item{.labx}{label of x-axix}
 
 \item{.bins}{bins argument for \code{geom_histogram}}
-
-\item{.plot}{if \code{TRUE} the plot is displayed}
 }
 \value{
 a ggplot object

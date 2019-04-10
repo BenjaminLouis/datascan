@@ -16,7 +16,6 @@ BugReports: https://github.com/BenjaminLouis/datascan/issues
 Imports: 
     dplyr,
     ggplot2,
-    graphics,
     magrittr,
     purrr,
     stats,

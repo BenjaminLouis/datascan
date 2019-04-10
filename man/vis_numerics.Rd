@@ -4,12 +4,10 @@
 \alias{vis_numerics}
 \title{Get and Visualise distribution of all numeric column in a data frame}
 \usage{
-vis_numerics(.data, .plot = TRUE)
+vis_numerics(.data)
 }
 \arguments{
 \item{.data}{a data frame}
-
-\item{.plot}{if \code{TRUE} the plot is displayed}
 }
 \value{
 a list of ggplot objects
