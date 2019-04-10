@@ -13,7 +13,7 @@ NULL
 #' @examples
 #' .get_madm(rnorm(100))
 .get_madm <- function(.num) {
-  stats::median(abs(.num - stats::median(.num, na.rm = TRUE)), na.rm = TRUE)
+  median(abs(.num - median(.num, na.rm = TRUE)), na.rm = TRUE)
 }
 
 #' @rdname utils
