@@ -76,6 +76,7 @@ NULL
 
 #' @rdname utils
 #' @importFrom stats setNames
+#' @importFrom dplyr recode
 #' @export
 #' @examples
 #' library(dplyr)
