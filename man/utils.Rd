@@ -7,6 +7,7 @@
 \alias{.get_bins}
 \alias{.get_cramerv}
 \alias{.get_r}
+\alias{.transform_cat}
 \title{Some internals functions}
 \usage{
 .get_madm(.num)
@@ -18,6 +19,8 @@
 .get_cramerv(.cat1, .cat2)
 
 .get_r(.data, .cat, .num)
+
+.transform_cat(.cat)
 }
 \arguments{
 \item{.num}{a numeric vector}
@@ -39,4 +42,7 @@ Some internals functions
 .get_bins(rnorm(100))
 #todo
 #todo
+library(dplyr)
+.transform_cat(starwars$species)
+.transform_cat(starwars$gender)
 }
