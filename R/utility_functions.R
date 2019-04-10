@@ -54,7 +54,9 @@ NULL
   n <- length(.cat1)
   k <- length(unique(.cat1))
   r <- length(unique(.cat2))
-  phi2 <- chisq.test(.cat1, .cat2, simulate.p.value = TRUE)$statistic/n
+  # chisq simulate.p.value = TRUE to avoir warning about p-value estimation
+  # but B = 1 for time optimisation because I don't care about p-value
+  phi2 <- chisq.test(.cat1, .cat2, simulate.p.value = TRUE, B = 1)$statistic/n
   phi2cor <- max(0, phi2 - ((k - 1) * (r - 1)) / (n - 1))
   kcor <- k - (((k - 1)^2)/(n - 1))
   rcor <- r - (((r - 1)^2)/(n - 1))
