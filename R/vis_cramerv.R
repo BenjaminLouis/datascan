@@ -29,7 +29,7 @@ vis_cramerv <- function(.data) {
           legend.position = "bottom")  +
     scale_fill_viridis_d(option = "D") +
     scale_y_discrete(expand = c(0, 0),
-                     limits = sort(unique(result$Cat1), decreasing = TRUE)) +
+                     limits = sort(unique(result$Cat2), decreasing = TRUE)) +
     scale_x_discrete(expand = c(0, 0), position = "top",
                      limits = sort(unique(result$Cat1), decreasing = FALSE)) +
     labs(fill = "Cramer's V")
