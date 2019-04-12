@@ -10,6 +10,6 @@ test_that("scan_corr works", {
 
   # Test if there is not numeric variable
   expect_error(scan_corr(iris["Species"]),
-               "There should be at least 2 numerics column in .data")
+               "There should be at least 2 numerical columns in .data")
 
 })

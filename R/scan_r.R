@@ -1,4 +1,4 @@
-#' Get the R coefficient of linear models between numeric and catagorical variables
+#' R coefficient of linear models between numerical and catagorical columns in a dataframe
 #'
 #' @param .data a data frame
 #'
@@ -11,7 +11,8 @@
 #' @importFrom tidyr crossing
 #'
 #' @examples
-#' vis_r(dplyr::starwars)
+#' library(dplyr)
+#' vis_r(starwars)
 scan_r <- function(.data) {
   quanti <- .data %>%
     select_if(is.numeric) %>%
@@ -20,8 +21,7 @@ scan_r <- function(.data) {
     select_if(function(x) !is.numeric(x) & !is.list(x)) %>%
     colnames()
   df <- .data
-  result <- crossing(Num = quanti, Cat = quali) %>%
+  crossing(Num = quanti, Cat = quali) %>%
     mutate(r = map2_dbl(Cat, Num, .get_r, .data = df))
-  return(result)
 }
 

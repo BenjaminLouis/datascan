@@ -2,7 +2,7 @@
 % Please edit documentation in R/vis_numerics.R
 \name{vis_numerics}
 \alias{vis_numerics}
-\title{Get and Visualise distribution of all numeric column in a data frame}
+\title{Distribution of all numerical columns in a dataframe}
 \usage{
 vis_numerics(.data)
 }
@@ -13,7 +13,7 @@ vis_numerics(.data)
 a list of ggplot objects
 }
 \description{
-Get and Visualise distribution of all numeric column in a data frame
+Distribution of all numerical columns in a dataframe
 }
 \examples{
 vis_numerics(iris)

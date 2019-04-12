@@ -1,8 +1,8 @@
-#' Statistics of numerics columns by groups of catagorical columns
+#' Statistics of numerical columns by groups of catagorical columns of a dataframe
 #'
-#' @param .data a data frame
+#' @param .data a dataframe
 #'
-#' @return a data frame with identifiers for numerics and categorical (and groups) columns
+#' @return a data frame with identifiers for numerical and categorical (and groups) columns
 #' and the same summary values as \link[datascan]{scan_numerics}
 #' @export
 #'
@@ -11,15 +11,15 @@
 #' @importFrom tidyr gather nest unnest
 #'
 #' @examples
-#' scan_numbygrp(iris)
-scan_numbygrp <- function(.data) {
+#' scan_ngcovar(iris)
+scan_ngcovar <- function(.data) {
 
   numname <- select_if(.data, is.numeric) %>% colnames()
-  catname <- select_if(.data, ~!is.numeric(.x) & !is.list(.x)) %>% colnames()
+  catname <- select_if(.data, ~is.character(.x) | is.factor(.x)) %>% colnames()
 
 
   if (length(numname) == 0 | length(catname) == 0) {
-    stop("There should be at least one numerical and one categorical variable")
+    stop("There should be at least one numerical and one categorical column in .data")
   }
 
   .data %>%
@@ -29,7 +29,7 @@ scan_numbygrp <- function(.data) {
     mutate(n = map_int(data, nrow)) %>%
     mutate(summary = map(data, scan_numerics)) %>%
     unnest(summary) %>%
-    select(Num = Var, everything()) %>%
-    arrange(Num)
+    select(Variable, everything()) %>%
+    arrange(Variable)
 
 }

@@ -1,4 +1,4 @@
-#' Gives some statistics about categorical variables in a dataframe
+#' Frequency of groups in all categorical columns of a dataframe
 #'
 #' @param .data a data.frame
 #'
@@ -18,18 +18,15 @@
 scan_groups <- function(.data) {
 
   # Selection of numeric variables
-  catdata <- select_if(.data, ~!is.numeric(.x))
+  catdata <- select_if(.data, ~is.character(.x) | is.factor(.x))
   # There should be numeric variables
-  if (ncol(catdata) == 0) {stop("No categorical variables found")}
+  if (ncol(catdata) == 0) {stop("There should be categorical column in .data")}
 
   #Stats
-  catdata <- catdata %>%
+  catdata %>%
     gather(key = "variables", value = "groups") %>%
     group_by(variables) %>%
     count(groups, sort = TRUE) %>%
     mutate(p = n/sum(n))
-
-  #return
-  return(catdata)
 
 }

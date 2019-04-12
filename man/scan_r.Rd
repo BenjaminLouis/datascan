@@ -2,7 +2,7 @@
 % Please edit documentation in R/scan_r.R
 \name{scan_r}
 \alias{scan_r}
-\title{Get the R coefficient of linear models between numeric and catagorical variables}
+\title{R coefficient of linear models between numerical and catagorical columns in a dataframe}
 \usage{
 scan_r(.data)
 }
@@ -14,8 +14,9 @@ a data frame with paired names of categorical variables (\code{Cat}
 and mnumeric ones \code{Num} and \code{r} value)
 }
 \description{
-Get the R coefficient of linear models between numeric and catagorical variables
+R coefficient of linear models between numerical and catagorical columns in a dataframe
 }
 \examples{
-vis_r(dplyr::starwars)
+library(dplyr)
+vis_r(starwars)
 }

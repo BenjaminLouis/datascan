@@ -2,7 +2,7 @@
 % Please edit documentation in R/vis_groups.R
 \name{vis_groups}
 \alias{vis_groups}
-\title{Ggplots of groups frequency in all categorical variables in a dataframe}
+\title{Bar plots of all categorical columns in a dataframe}
 \usage{
 vis_groups(.data)
 }
@@ -13,8 +13,9 @@ vis_groups(.data)
 a list of ggplots
 }
 \description{
-Ggplots of groups frequency in all categorical variables in a dataframe
+Bar plots of all categorical columns in a dataframe
 }
 \examples{
-vis_groups(dplyr::starwars)
+library(dplyr)
+vis_groups(starwars)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/scan_cramerv.R
 \name{scan_cramerv}
 \alias{scan_cramerv}
-\title{Get bias corrected Cramer's V for all pairs of categorical columns}
+\title{Bias corrected Cramer's V for all pairs of categorical columns}
 \usage{
 scan_cramerv(.data)
 }
@@ -14,7 +14,7 @@ a data frame with paired names of categorical variables (\code{Cat1}
 and \code{Cat2} and Cramer's V value)
 }
 \description{
-Get bias corrected Cramer's V for all pairs of categorical columns
+Bias corrected Cramer's V for all pairs of categorical columns
 }
 \examples{
 scan_cramerv(dplyr::starwars)

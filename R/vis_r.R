@@ -1,4 +1,4 @@
-#' Plot linear R coefficient of linear models between numeric and catagorical variables
+#' Plot R coefficient of linear models between numeric and catagorical columns in a dataframe
 #'
 #' @param .data a data frame
 #'

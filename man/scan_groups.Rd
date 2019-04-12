@@ -2,7 +2,7 @@
 % Please edit documentation in R/scan_groups.R
 \name{scan_groups}
 \alias{scan_groups}
-\title{Gives some statistics about categorical variables in a dataframe}
+\title{Frequency of groups in all categorical columns of a dataframe}
 \usage{
 scan_groups(.data)
 }
@@ -16,7 +16,7 @@ the groups names of categorical variables, \code{n} the occurence number for eac
 groups and \code{p} the proportion
 }
 \description{
-Gives some statistics about categorical variables in a dataframe
+Frequency of groups in all categorical columns of a dataframe
 }
 \examples{
 data(iris)

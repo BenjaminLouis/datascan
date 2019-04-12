@@ -2,23 +2,22 @@
 % Please edit documentation in R/scan_numerics.R
 \name{scan_numerics}
 \alias{scan_numerics}
-\title{Gives some statistics about numeric data distributions}
+\title{Summary statistics about numerical columns in a dataframe}
 \usage{
 scan_numerics(.data)
 }
 \arguments{
-\item{.data}{a data.frame}
+\item{.data}{a dataframe}
 }
 \value{
 a data.frame with one row for each numeric variables in \code{data} with
 minimum (\code{Min}) and maximum (\code{Max}) values, 1st, 2nd
-and 3rd quartiles (\code{Q1}, \code{Q2}, \code{Q3}), interquartile range value (IQR), median absolute deviation
+and 3rd quartiles (\code{Q1}, \code{Med}, \code{Q2}), interquartile range value (IQR), median absolute deviation
 from the median (\code{MADM}), MADM to median ratio (\code{MADM/Q2}) and skewness
 }
 \description{
-Gives some statistics about numeric data distributions
+Summary statistics about numerical columns in a dataframe
 }
 \examples{
-data(iris)
 scan_numerics(iris)
 }
