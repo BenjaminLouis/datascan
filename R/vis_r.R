@@ -8,7 +8,8 @@
 #' @importFrom ggplot2 ggplot aes sym geom_tile theme_classic theme element_blank element_text scale_fill_viridis_d scale_y_discrete scale_x_discrete labs
 #'
 #' @examples
-#' vis_r(dplyr::starwars)
+#' library(dplyr)
+#' vis_r(starwars)
 vis_r <- function(.data) {
 
   result <- scan_r(.data)

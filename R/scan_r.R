@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' library(dplyr)
-#' vis_r(starwars)
+#' scan_r(starwars)
 scan_r <- function(.data) {
   quanti <- .data %>%
     select_if(is.numeric) %>%

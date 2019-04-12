@@ -11,13 +11,14 @@
 #' @importFrom tidyr crossing
 #'
 #' @examples
-#' scan_cramerv(dplyr::starwars)
+#' library(dplyr)
+#' scan_cramerv(starwars)
 scan_cramerv <- function(.data) {
 
   catdata <- select_if(.data, ~is.character(.x) | is.factor(.x))
   catname <- colnames(catdata)
   # There should be numeric variables
-  if (ncol(catdata) == 0) {stop("No categorical variables found")}
+  if (ncol(catdata) < 2) {stop("There should be at least 2 categorical columns in .data")}
 
   crossing(Cat1 = catname, Cat2 = catname) %>%
     mutate(cramerV = map2_dbl(Cat1, Cat2, ~.get_cramerv(catdata[[.x]], catdata[[.y]])))

@@ -40,7 +40,8 @@ NULL
 #' @importFrom stats chisq.test
 #' @export
 #' @examples
-#' #todo
+#' x <- sample(letters, 100, replace = TRUE)
+#' .get_cramerv(x, x)
 .get_cramerv <- function(.cat1, .cat2) {
   # To consider NA's as a group
   .cat1 <- factor(.cat1)
@@ -68,7 +69,7 @@ NULL
 #' @importFrom stats lm as.formula na.omit
 #' @export
 #' @examples
-#' #todo
+#' .get_r(iris, "Species", "Sepal.Length")
 .get_r <- function(.data, .cat, .num) {
   mod <- lm(formula = as.formula(paste0(.num, "~", .cat)), data = .data, na.action = na.omit)
   sqrt(summary(mod)$r.squared)
@@ -83,6 +84,7 @@ NULL
 #' .transform_cat(starwars$species)
 #' .transform_cat(starwars$gender)
 .transform_cat <- function(.cat) {
+  .cat = as.character(.cat)
   tt <- table(.cat, useNA = "ifany")
   ok <- names(tt[tt >= 5])
   nas <- if (any(is.na(ok))) {NA_character_} else {"Other"}

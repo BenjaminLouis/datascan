@@ -27,12 +27,13 @@ vis_nncovar <- function(.data, ...) {
   non_target_name <- setdiff(colnames(df), target_name)
 
   if (length(non_target_name) == 0) {
+    non_target_name <- target_name
     target_name <- NULL
-    warning("All numerical columns were targets. Argument ... was ignored")
+    warning("All numerical columns were targets. Argument 'dots' was ignored")
   }
 
   if (any(!target_name %in% colnames(df))) {
-    stop("All target columns (...) should be numerical")
+    stop("All target columns should be numerical")
   }
 
   if (length(target_name) > 0) {

@@ -17,7 +17,7 @@ plot_bar <- function(.data, .cat) {
 
   var <- enquo(.cat)
 
-  if (is.numeric(pull(.data, !!var))) {stop(".cat should not be a numeric vector")}
+  if (is.numeric(pull(.data, !!var))) {stop(".cat should be a categorical column")}
 
   df <- select(.data, !!var) %>%
     count(!!var)
