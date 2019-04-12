@@ -15,6 +15,12 @@
 #' with(starwars, vis_grpbygrp(eye_color, hair_color))
 vis_grpbygrp <- function(.cat1, .cat2, .labx = "", .laby = "") {
 
+  # Transform NA as a group to avoid warning
+  .cat1 <- as.character(.cat1)
+  .cat1[is.na(.cat1)] <- "NA"
+  .cat2 <- as.character(.cat2)
+  .cat2[is.na(.cat2)] <- "NA"
+
   ggplot() +
     geom_count(aes(.cat1, .cat2, color = stat(prop), group = 1))  +
     scale_size_area(max_size = 10, guide = FALSE) +
