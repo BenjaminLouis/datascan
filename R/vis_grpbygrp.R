@@ -19,7 +19,7 @@ vis_grpbygrp <- function(.cat1, .cat2, .labx = "", .laby = "") {
     geom_count(aes(.cat1, .cat2, color = stat(prop), group = 1))  +
     scale_size_area(max_size = 10, guide = FALSE) +
     theme_classic() +
-    theme(axis.title = element_blank(),
+    theme(axis.title = element_text(face = "bold", size = 12),
           axis.text = element_text(face = "bold", size = 10),
           legend.position = "bottom",
           legend.key.size = unit(0.8, "cm"),
