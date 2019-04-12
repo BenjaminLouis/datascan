@@ -40,8 +40,9 @@ Some internals functions
 .get_madm(rnorm(100))
 .get_skewness(rnorm(100))
 .get_bins(rnorm(100))
-#todo
-#todo
+x <- sample(letters, 100, replace = TRUE)
+.get_cramerv(x, x)
+.get_r(iris, "Species", "Sepal.Length")
 library(dplyr)
 .transform_cat(starwars$species)
 .transform_cat(starwars$gender)

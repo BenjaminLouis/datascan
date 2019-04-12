@@ -18,8 +18,7 @@ plot_violin <- function(.data, .cat, .num) {
   varx <- ggplot2::enquo(.cat)
   vary <- ggplot2::enquo(.num)
 
-  df <- dplyr::select(.data, !!varx, !!vary)# %>%
-   # mutate_if(~!is.numeric(.x), funs(map_chr(., ~if (is.na(.x)) {"NA"} else {.x})))
+  df <- dplyr::select(.data, !!varx, !!vary)
 
   med <- df %>%
     dplyr::group_by(!!varx) %>%

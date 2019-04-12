@@ -17,5 +17,6 @@ and \code{Cat2} and Cramer's V value)
 Bias corrected Cramer's V for all pairs of categorical columns
 }
 \examples{
-scan_cramerv(dplyr::starwars)
+library(dplyr)
+scan_cramerv(starwars)
 }

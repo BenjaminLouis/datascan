@@ -18,5 +18,5 @@ R coefficient of linear models between numerical and catagorical columns in a da
 }
 \examples{
 library(dplyr)
-vis_r(starwars)
+scan_r(starwars)
 }

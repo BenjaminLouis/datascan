@@ -5,11 +5,13 @@
 #' @name quasiquotation
 NULL
 
+#' Bang bang operator
 #' @rdname quasiquotation
 #' @export
 #' @importFrom rlang !!
 NULL
 
+#' Bang bang bang operator
 #' @rdname quasiquotation
 #' @export
 #' @importFrom rlang !!!

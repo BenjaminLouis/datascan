@@ -16,5 +16,6 @@ a gpplot
 Plot R coefficient of linear models between numeric and catagorical columns in a dataframe
 }
 \examples{
-vis_r(dplyr::starwars)
+library(dplyr)
+vis_r(starwars)
 }

@@ -21,10 +21,6 @@ plot_count <- function(.data, .cat1, .cat2) {
   vary <- enquo(.cat2)
 
   # Transform NA as a group to avoid warning
-  # .cat1 <- as.character(.cat1)
-  # .cat1[is.na(.cat1)] <- "NA"
-  # .cat2 <- as.character(.cat2)
-  # .cat2[is.na(.cat2)] <- "NA"
   df <- select(.data, !!varx, !!vary) %>%
     mutate_all(funs(map_chr(., ~if (is.na(.x)) {"NA"} else {.x})))
 

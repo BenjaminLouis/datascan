@@ -40,7 +40,8 @@ NULL
 #' @importFrom stats chisq.test
 #' @export
 #' @examples
-#' #todo
+#' x <- sample(letters, 100, replace = TRUE)
+#' .get_cramerv(x, x)
 .get_cramerv <- function(.cat1, .cat2) {
   # To consider NA's as a group
   .cat1 <- factor(.cat1)
@@ -68,7 +69,7 @@ NULL
 #' @importFrom stats lm as.formula na.omit
 #' @export
 #' @examples
-#' #todo
+#' .get_r(iris, "Species", "Sepal.Length")
 .get_r <- function(.data, .cat, .num) {
   mod <- lm(formula = as.formula(paste0(.num, "~", .cat)), data = .data, na.action = na.omit)
   sqrt(summary(mod)$r.squared)
