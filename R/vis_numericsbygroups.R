@@ -3,7 +3,7 @@
 #' @name vis_numericsbygroups
 #'
 #' @param .data a dataframe
-#' @param .regroup if \code{TRUE}, groups xith less than 5 occurences are grouped together under the name "Others_groups"
+#' @param .regroup if \code{TRUE}, groups with less than 5 occurences are grouped together under the name "Others_groups"
 #'
 #' @return a list of ggplot
 #' @export
