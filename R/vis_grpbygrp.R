@@ -28,6 +28,6 @@ vis_grpbygrp <- function(.cat1, .cat2, .labx = "", .laby = "") {
     scale_y_discrete(limits = sort(unique(.cat2), decreasing = TRUE)) +
     scale_x_discrete(position = "top",
                      limits = sort(unique(.cat1), decreasing = FALSE)) +
-    labs(color = "Proportion\n")
+    labs(color = "Proportion\n", x = .labx, y = .laby)
 
 }
