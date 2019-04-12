@@ -3,6 +3,7 @@
 #' @name vis_numericsbygroups
 #'
 #' @param .data a dataframe
+#' @param .regroup if \code{TRUE}, groups xith less than 5 occurences are grouped together under the name "Others_groups"
 #'
 #' @return a list of ggplot
 #' @export
@@ -14,15 +15,17 @@
 #' @examples
 #' library(dplyr)
 #' vis_numericsbygroups(starwars)
-vis_numericsbygroups <- function(.data) {
+vis_numericsbygroups <- function(.data, .regroup = TRUE) {
 
   numname <- select_if(.data, is.numeric) %>% colnames()
   catname <- select_if(.data, ~!is.numeric(.x) & !is.list(.x)) %>%
     select_if(~any(table(.x) > 1)) %>%
     colnames()
 
-  .data <- .data %>%
-    mutate_at(vars(!!!syms(catname)), .transform_cat)
+  if (.regroup) {
+    .data <- .data %>%
+      mutate_at(vars(!!!syms(catname)), .transform_cat)
+  }
 
   if (length(numname) == 0 | length(catname) == 0) {
     stop("There should be at least one numerical and one categorical variable")
