@@ -20,7 +20,8 @@ Imports:
     purrr,
     stats,
     tibble,
-    tidyr
+    tidyr,
+    utils
 Suggests: 
     covr,
     knitr,
