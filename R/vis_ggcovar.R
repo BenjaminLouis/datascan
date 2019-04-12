@@ -41,12 +41,13 @@ vis_ggcovar <- function(.data, ..., .regroup = TRUE) {
   non_target_name <- setdiff(catname, target_name)
 
   if (length(non_target_name) == 0) {
+    non_target_name <- target_name
     target_name <- NULL
-    warning("All categorical columns were targets. Argument ... was ignored")
+    warning("All categorical columns were targets. Argument 'dots' was ignored")
   }
 
   if (any(!target_name %in% colnames(df))) {
-    stop("All target columns (...) should be categorical")
+    stop("All target columns should be categorical")
   }
 
   if (.regroup) {

@@ -6,6 +6,10 @@ test_that("vis_nncovar works", {
   expect_is(ggplist, class = "list")
   expect_is(ggplist[[1]], class = c("gg", "ggplot"))
 
+  ggplist <- vis_nncovar(iris, Sepal.Length)
+  expect_is(ggplist, class = "list")
+  expect_is(ggplist[[1]], class = c("gg", "ggplot"))
+
   expect_error(vis_nncovar(iris, Species),
                "All target columns should be numerical")
 

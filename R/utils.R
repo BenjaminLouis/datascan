@@ -84,6 +84,7 @@ NULL
 #' .transform_cat(starwars$species)
 #' .transform_cat(starwars$gender)
 .transform_cat <- function(.cat) {
+  .cat = as.character(.cat)
   tt <- table(.cat, useNA = "ifany")
   ok <- names(tt[tt >= 5])
   nas <- if (any(is.na(ok))) {NA_character_} else {"Other"}

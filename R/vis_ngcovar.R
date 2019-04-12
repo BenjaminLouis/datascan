@@ -35,9 +35,13 @@ vis_ngcovar <- function(.data, ..., .regroup = TRUE) {
     numname <- target_name
   }
 
-  catname <- select_if(.data, ~!is.numeric(.x) & !is.list(.x)) %>%
+  catname <- select_if(.data, ~is.factor(.x) | is.character(.x)) %>%
     select_if(~any(table(.x) > 1)) %>% #This line should be explained
     colnames()
+
+  if (length(numname) == 0 | length(catname) == 0) {
+    stop("There should be at least one numerical and one categorical columns")
+  }
 
   if (.regroup) {
     df <- .data %>%
@@ -46,10 +50,6 @@ vis_ngcovar <- function(.data, ..., .regroup = TRUE) {
   } else {
     df <- .data %>%
       select(!!!syms(catname), !!!syms(numname))
-  }
-
-  if (length(numname) == 0 | length(catname) == 0) {
-    stop("There should be at least one numerical and one categorical columns")
   }
 
   crossing(x = catname, y = numname) %>%
