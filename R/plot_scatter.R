@@ -22,7 +22,7 @@ plot_scatter <- function(.data, .num1, .num2, .by = NULL) {
   y = enquo(.num2)
   by = enquo(.by)
 
-  if (!is.null(.by)) {
+  if (quo_name(by) != "NULL") {
     ggp <- ggplot(.data, aes(x = !!x, y = !!y, color = !!by)) +
       geom_point(shape = 19, size = 2)
   } else {

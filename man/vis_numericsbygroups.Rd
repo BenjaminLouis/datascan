@@ -5,12 +5,14 @@
 \alias{vis_nbg}
 \title{Violin plots for all pairs of numeric/categorical variables in a data frame}
 \usage{
-vis_numericsbygroups(.data)
+vis_numericsbygroups(.data, .regroup = TRUE)
 
 vis_nbg(.data)
 }
 \arguments{
 \item{.data}{a dataframe}
+
+\item{.regroup}{if \code{TRUE}, groups with less than 5 occurences are grouped together under the name "Others_groups"}
 }
 \value{
 a list of ggplot
