@@ -2,7 +2,7 @@
 % Please edit documentation in R/vis_corr.R
 \name{vis_corr}
 \alias{vis_corr}
-\title{Visualise correlation between numeric columns of a dataframe}
+\title{plots correlation between numerical columns of a dataframe}
 \usage{
 vis_corr(.data, .use = "na.or.complete", .method = "spearman")
 }
@@ -17,7 +17,7 @@ vis_corr(.data, .use = "na.or.complete", .method = "spearman")
 a ggplot
 }
 \description{
-Visualise correlation between numeric columns of a dataframe
+plots correlation between numerical columns of a dataframe
 }
 \examples{
 vis_corr(iris)

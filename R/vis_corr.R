@@ -1,4 +1,4 @@
-#' Visualise correlation between numeric columns of a dataframe
+#' plots correlation between numerical columns of a dataframe
 #'
 #' @param .data a dataframe
 #' @param .use see \link[stats]{cor}

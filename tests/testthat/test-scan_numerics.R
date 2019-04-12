@@ -10,5 +10,5 @@ test_that("scan-numerics works", {
 
   # Test if there is not numeric variable
   expect_error(scan_numerics(iris["Species"]),
-               "No numeric variables found")
+               "There should be numerical columns in .data")
 })

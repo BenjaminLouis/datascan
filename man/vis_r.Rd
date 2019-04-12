@@ -2,7 +2,7 @@
 % Please edit documentation in R/vis_r.R
 \name{vis_r}
 \alias{vis_r}
-\title{Plot linear R coefficient of linear models between numeric and catagorical variables}
+\title{Plot R coefficient of linear models between numeric and catagorical columns in a dataframe}
 \usage{
 vis_r(.data)
 }
@@ -13,7 +13,7 @@ vis_r(.data)
 a gpplot
 }
 \description{
-Plot linear R coefficient of linear models between numeric and catagorical variables
+Plot R coefficient of linear models between numeric and catagorical columns in a dataframe
 }
 \examples{
 vis_r(dplyr::starwars)

@@ -10,6 +10,6 @@ test_that("scan-groups works", {
 
   # Test if there is not numeric variable
   expect_error(scan_groups(iris[1:4]),
-               "No categorical variables found")
+               "There should be categorical column in .data")
 })
 

@@ -1,2 +1,2 @@
-globalVariables(c("variables", "groups", "n", "Cat", "Cat1", "Cat2", "Num", "cramerV", "r", "varia", "Freq", "Num1", "Num2", "Corr",
-                  "Groups", "data", "Var", "Median", "value", "ggplist", "prop", "x", "y"))
+globalVariables(c(".", "Cat", "Cat1", "Cat2", "Corr", "Groups", "MADM", "Med", "Median", "Num", "Num1", "Num2", "Variable",
+                  "cramerV", "data", "groups", "n", "prop", "qu", "r", "value", "variables", "x", "y"))

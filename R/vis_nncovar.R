@@ -8,7 +8,7 @@
 #'
 #' @importFrom dplyr select_if setdiff mutate select pull
 #' @importFrom ggplot2 quos quo_name sym
-#' @importFrom purrr map2 map
+#' @importFrom purrr map2 map map_chr
 #' @importFrom tidyr crossing
 #' @importFrom utils combn
 #'
@@ -20,11 +20,11 @@
 #' vis_nncovar(iris, Sepal.Length)
 vis_nncovar <- function(.data, ...) {
 
-  target <- ggplot2::quos(...)
-  target_name <- sapply(target, ggplot2::quo_name)
+  target <- quos(...)
+  target_name <- map_chr(target, quo_name)
 
-  df <- dplyr::select_if(.data, is.numeric)
-  non_target_name <- dplyr::setdiff(colnames(df), target_name)
+  df <- select_if(.data, is.numeric)
+  non_target_name <- setdiff(colnames(df), target_name)
 
   if (length(non_target_name) == 0) {
     target_name <- NULL
@@ -36,15 +36,15 @@ vis_nncovar <- function(.data, ...) {
   }
 
   if (length(target_name) > 0) {
-    dfcross <- tidyr::crossing(x = non_target_name, y = target_name) %>%
-      dplyr::mutate(data = purrr::map2(x, y, ~dplyr::select(df, .x, .y))) %>%
-      dplyr::pull(data)
+    dfcross <- crossing(x = non_target_name, y = target_name) %>%
+      mutate(data = map2(x, y, ~select(df, .x, .y))) %>%
+      pull(data)
   } else {
-    dfcross <- utils::combn(non_target_name, 2, simplify = FALSE) %>%
-      purrr::map(dplyr::select, .data = df)
+    dfcross <- combn(non_target_name, 2, simplify = FALSE) %>%
+      map(select, .data = df)
   }
 
   dfcross %>%
-    purrr::map(~plot_scatter(.x, .num1 = !!ggplot2::sym(names(.x)[1]), .num2 = !!ggplot2::sym(names(.x)[2])))
+    map(~plot_scatter(.x, .num1 = !!sym(names(.x)[1]), .num2 = !!sym(names(.x)[2])))
 
 }

@@ -10,5 +10,5 @@ test_that("vis_numerics works", {
 
   # Test if there is not numeric variable
   expect_error(vis_numerics(iris["Species"]),
-               "No numeric columns found")
+               "There should be numerical columns in .data")
 })

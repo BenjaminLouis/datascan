@@ -1,4 +1,4 @@
-#' Get and Visualise distribution of all numeric column in a data frame
+#' Distribution of all numerical columns in a dataframe
 #'
 #' @param .data a data frame
 #'
@@ -6,6 +6,8 @@
 #' @export
 #'
 #' @importFrom dplyr select_if
+#' @importFrom ggplot2 syms
+#' @importFrom purrr map
 #'
 #' @examples
 #' vis_numerics(iris)
@@ -13,9 +15,8 @@ vis_numerics <- function(.data) {
   # Select numeric columns
   numdata <- select_if(.data, is.numeric)
   # There should be numeric colmns
-  if (ncol(numdata) == 0) {stop("No numeric columns found")}
+  if (ncol(numdata) == 0) {stop("There should be numerical columns in .data")}
   # Get the distr
-  ggplist <- mapply(vis_num, .num = numdata, .labx = names(numdata), SIMPLIFY = FALSE)
-  # return the distr
-  return(ggplist)
+  map(syms(names(numdata)), plot_hist, .data = numdata)
 }
+

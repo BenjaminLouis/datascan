@@ -1,4 +1,4 @@
-#' Get bias corrected Cramer's V for all pairs of categorical columns
+#' Bias corrected Cramer's V for all pairs of categorical columns
 #'
 #' @param .data a data frame
 #'
@@ -12,15 +12,14 @@
 #'
 #' @examples
 #' scan_cramerv(dplyr::starwars)
-
 scan_cramerv <- function(.data) {
 
-  quali <- .data %>%
-    select_if(function(x) is.character(x) | is.factor(x)) %>%
-    colnames()
-  df <- .data
-  result <- crossing(Cat1 = quali, Cat2 = quali) %>%
-    mutate(cramerV = map2_dbl(Cat1, Cat2, ~.get_cramerv(df[[.x]], df[[.y]])))
+  catdata <- select_if(.data, ~is.character(.x) | is.factor(.x))
+  catname <- colnames(catdata)
+  # There should be numeric variables
+  if (ncol(catdata) == 0) {stop("No categorical variables found")}
 
-  return(result)
+  crossing(Cat1 = catname, Cat2 = catname) %>%
+    mutate(cramerV = map2_dbl(Cat1, Cat2, ~.get_cramerv(catdata[[.x]], catdata[[.y]])))
+
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/vis_cramerv.R
 \name{vis_cramerv}
 \alias{vis_cramerv}
-\title{Plot bias corrected Cramer's V for all pairs of categorical columns}
+\title{Plot bias corrected Cramer's V between categorical columns of a dataframe}
 \usage{
 vis_cramerv(.data)
 }
@@ -13,8 +13,9 @@ vis_cramerv(.data)
 a ggplot
 }
 \description{
-Plot bias corrected Cramer's V for all pairs of categorical columns
+Plot bias corrected Cramer's V between categorical columns of a dataframe
 }
 \examples{
-vis_cramerv(dplyr::starwars)
+library(dplyr)
+vis_cramerv(starwars)
 }

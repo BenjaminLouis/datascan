@@ -2,7 +2,7 @@
 % Please edit documentation in R/scan_corr.R
 \name{scan_corr}
 \alias{scan_corr}
-\title{Correlation between numeric columns of a dataframe}
+\title{Correlation between numerical columns of a dataframe}
 \usage{
 scan_corr(.data, .use = "na.or.complete", .method = "spearman")
 }
@@ -14,10 +14,10 @@ scan_corr(.data, .use = "na.or.complete", .method = "spearman")
 \item{.method}{see \link[stats]{cor}}
 }
 \value{
-a data frame with correlation values of all pairs of numeric columns
+a data frame with correlation values of all pairs of numerical columns
 }
 \description{
-Correlation between numeric columns of a dataframe
+Correlation between numerical columns of a dataframe
 }
 \examples{
 scan_corr(iris)

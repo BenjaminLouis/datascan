@@ -1,4 +1,4 @@
-#' Ggplots of groups frequency in all categorical variables in a dataframe
+#' Bar plots of all categorical columns in a dataframe
 #'
 #' @param .data a dataframe
 #'
@@ -6,16 +6,18 @@
 #' @export
 #'
 #' @importFrom dplyr select_if
+#' @importFrom ggplot2 syms
+#' @importFrom purrr map
 #'
 #' @examples
-#' vis_groups(dplyr::starwars)
+#' library(dplyr)
+#' vis_groups(starwars)
 vis_groups <- function(.data) {
   # Select cat columns
-  catdata <- select_if(.data, ~!is.numeric(.x) & !is.list(.x))
+  catdata <- select_if(.data, ~is.character(.x) | is.factor(.x))
   # There should be numeric colmns
-  if (ncol(catdata) == 0) {stop("No categorical columns found")}
+  if (ncol(catdata) == 0) {stop("There should be categorical columns in .data")}
   # Get the distr
-  ggplist <- mapply(vis_grp, .cat = catdata, .labx = names(catdata), SIMPLIFY = FALSE)
-  # return the distr
-  return(ggplist)
+  map(syms(names(catdata)), plot_bar, .data = catdata)
+
 }

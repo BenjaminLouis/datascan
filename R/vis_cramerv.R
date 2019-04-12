@@ -1,4 +1,4 @@
-#' Plot bias corrected Cramer's V for all pairs of categorical columns
+#' Plot bias corrected Cramer's V between categorical columns of a dataframe
 #'
 #' @param .data a data frame
 #'
@@ -8,8 +8,8 @@
 #' @importFrom ggplot2 ggplot aes geom_tile theme_classic theme element_blank element_text scale_fill_viridis_c scale_y_discrete scale_x_discrete labs
 #'
 #' @examples
-#' vis_cramerv(dplyr::starwars)
-
+#' library(dplyr)
+#' vis_cramerv(starwars)
 vis_cramerv <- function(.data) {
   result <- scan_cramerv(.data)
 
