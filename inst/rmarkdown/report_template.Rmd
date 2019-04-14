@@ -23,23 +23,6 @@ library(htmltools)
 data <- if (!is.null(params$dataset)) {params$dataset} else {dplyr::starwars}
 nr <- nrow(data)
 nc <- ncol(data)
-dataprop <- function(x) {x/nr}
-color_bar2 <- function(x, color = "lightgreen", simple = TRUE) {
-      if (simple) {
-        sapply(x, function(a) {
-          as.character(tags$span(style = paste0("display: block; direction: rtl; border-radius: 4px; width: 100%; border: 1px solid ", color, ";"),
-                    a))})
-        } else {
-          sapply(x, function(a) {
-            as.character(tags$span(style = paste0("display: block; direction: rtl; border-radius: 4px; width: 100%; border: 1px solid ", color, ";"),
-                      tags$span(style = paste0("display: inline-block; direction: rtl; border-radius: 0px; margin: 0.3px; background-color: ", color, "; width: ", percent(dataprop(as.numeric(a))), ";"),a)))})
-        }
-}
-apply_colorbar <- function(x) {
-  x[!is.na(x) & as.character(x) != "0"] <- color_bar2(x[!is.na(x) & as.character(x) != "0"], simple = FALSE)
-  x[!is.na(x) & as.character(x) == "0"] <- color_bar2(x[!is.na(x) & as.character(x) == "0"])
-  x
-}
 ```
 
 ## Dataset generalities
@@ -55,7 +38,8 @@ scc <- scan_columns(data)
 scd %>% 
   kable(align = c("l", "r")) %>% 
   kable_styling(full_width = F, bootstrap_options = "condensed") %>% 
-  add_indent(3:(nrow(scd) - 2))
+  add_indent(3:(nrow(scd) - 2)) %>%
+  column_spec(1, bold = T)
 ```
 
 ### Columns status
@@ -63,18 +47,16 @@ scd %>%
 ```{r tab_scc}
 scc %>% 
   select(-contains("p_")) %>% 
-#   formattable(list(
-#     area(col = c(n_na, n_0, n_Inf)) ~ color_bar("lightgreen", fun = "dataprop")
-# )) %>% 
   mutate(
-    Unique = apply_colorbar(Unique),
-    NAs = apply_colorbar(n_na),
-    Zeros = apply_colorbar(n_0),
-    'Inf' = apply_colorbar(n_Inf)
+    Unique = .apply_colorbar(Unique, nr),
+    NAs = .apply_colorbar(n_na, nr),
+    Zeros = .apply_colorbar(n_0, nr),
+    'Inf' = .apply_colorbar(n_Inf, nr)
   ) %>%
   select(-contains("n_")) %>%
   kable("html", escape = F, , align = c("l", "l", rep("r",4))) %>% 
-  kable_styling(full_width = F, bootstrap_options = "condensed") %>% 
+  kable_styling(full_width = F, bootstrap_options = "condensed") %>%
+  column_spec(1, bold = T) %>% 
   column_spec(3:6, width = "70px")
 ```
 
