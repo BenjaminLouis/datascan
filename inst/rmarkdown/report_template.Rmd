@@ -17,7 +17,7 @@ options(knitr.kable.NA = '')
 library(dplyr)
 library(knitr)
 library(kableExtra)
-library(formattable)
+#library(formattable)
 library(datascan)
 library(cowplot)
 
@@ -77,7 +77,7 @@ if (ncnum == 0) {
 if (ncnum > 0) {
   cat("#### Summary table", fill = TRUE)
   scan_numerics(data) %>%
-  kable("html", escape = F, align = c("l", rep("r", 9))) %>% 
+  kable("html", escape = F, align = c("l", rep("r", 9)), digits = 2) %>% 
   kable_styling(full_width = F, bootstrap_options = "condensed")
 }
 ```
