@@ -1,7 +1,8 @@
 ---
 params:
   dataset: NULL 
-  targets: NULL
+  target: NULL
+  regroup: TRUE
   config: report_options
 title: "Exploratory Data Analysis report"
 author: "John Doe"
@@ -26,6 +27,15 @@ nr <- nrow(data)
 nc <- ncol(data)
 ncnum <- select_if(data, is.numeric) %>% ncol()
 nccat <- select_if(data, ~is.factor(.x) | is.character(.x)) %>% ncol()
+#To avoid width options equal 0 
+nonzero <- function(x) {
+  if (x == 0) {
+    x <- 1
+  }
+  return(x)
+}
+target <- params$target
+regroup <- params$regroup
 ```
 
 ## Dataset
@@ -82,8 +92,18 @@ if (ncnum > 0) {
 }
 ```
 
-```{r ifnumplot, fig.width = 10, out.width = '100%',fig.asp = 0.8*ceiling(ncnum/4)}
-if (ncnum > 0) {
+```{r ifnumplot1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (ncnum == 1) {
+  cat("#### Graphics", fill = TRUE)
+  cat("", fill = TRUE)
+  plotnum <- vis_numerics(data)
+  plotnum[[1]]
+}
+```
+
+
+```{r ifnumplot2+, fig.width = 10, out.width = '100%',fig.asp = 0.8*nonzero(ceiling(ncnum/4))}
+if (ncnum > 1) {
   cat("#### Graphics", fill = TRUE)
   cat("", fill = TRUE)
   plotnum <- vis_numerics(data)
@@ -100,7 +120,8 @@ if (nccat == 0) {
 }
 ```
 
-```{r ifcattable}
+---
+#```{r ifcattable}
 # if (nccat > 0) {
 #   cat("__Summary table__", fill = TRUE)
 #   scan_groups(data) %>%
@@ -114,10 +135,19 @@ if (nccat == 0) {
 #     column_spec(1, bold = T) %>% 
 #     column_spec(3, width = "50px")
 # }
+#```
+---
+
+
+```{r ifcatplot1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (nccat == 1) {
+  plotcat <- vis_groups(data)
+  plotcat[[1]]
+}
 ```
 
-```{r ifcatplot, fig.width = 10, out.width = '100%', fig.asp = 0.8*ceiling(nccat/4)}
-if (nccat > 0) {
+```{r ifcatplot2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*nonzero(ceiling(nccat/4))}
+if (nccat > 1) {
   plotcat <- vis_groups(data)
   plot_grid(plotlist = plotcat, align = "hv", ncol = 2)
 }
@@ -180,8 +210,16 @@ if (ncnum < 2) {
 }
 ```
 
-```{r num-num, fig.width = 10, out.width = '100%', fig.asp = 0.8*ceiling(ncnum*(ncnum - 1)/8)}
-if (ncnum >= 2) {
+```{r num-num1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (ncnum == 2) {
+  plotnumnum <- vis_nncovar(data)
+  plotnumnum[[1]]
+}
+```
+
+
+```{r num-num2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*nonzero(ceiling(ncnum*(ncnum - 1)/8))}
+if (ncnum > 2) {
   plotnumnum <- vis_nncovar(data)
   plot_grid(plotlist = plotnumnum, align = "hv", ncol = 2)
 }
@@ -195,9 +233,17 @@ if (nccat == 0 & ncnum == 0) {
 }
 ```
 
-```{r num-cat, fig.width = 10, out.width = '100%', fig.asp = 0.8*ceiling(ncnum*nccat/8)}
-if (nccat > 0 & ncnum > 0) {
-  plotnumcat <- vis_ngcovar(data)
+```{r num-cat1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (nccat == 1 & ncnum == 1) {
+  plotnumcat <- vis_ngcovar(data, .regroup = regroup)
+  plotnumcat[[1]]
+}
+```
+
+
+```{r num-cat2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*nonzero(ceiling(ncnum*nccat/8))}
+if (nccat != 0 & ncnum != 0 & nccat + ncnum > 2) {
+  plotnumcat <- vis_ngcovar(data, .regroup = regroup)
   plot_grid(plotlist = plotnumcat, align = "hv", ncol = 2)
 }
 ```
@@ -211,9 +257,17 @@ if (nccat < 2) {
 }
 ```
 
-```{r cat-cat, fig.width = 10, out.width = '100%', fig.asp = 0.8*ceiling(nccat*(nccat - 1)/8)}
-if (nccat >= 2) {
-  plotcatcat <- vis_ggcovar(data)
+```{r cat-cat1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (nccat == 2) {
+  plotcatcat <- vis_ggcovar(data, .regroup = regroup)
+  plotcatcat[[1]]
+}
+```
+
+
+```{r cat-cat2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*nonzero(ceiling(nccat*(nccat - 1)/8))}
+if (nccat > 2) {
+  plotcatcat <- vis_ggcovar(data, .regroup = regroup)
   plot_grid(plotlist = plotcatcat, align = "hv", ncol = 2)
 }
 ```
