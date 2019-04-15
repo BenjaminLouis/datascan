@@ -22,22 +22,39 @@ plot_bar <- function(.data, .cat) {
   df <- select(.data, !!var) %>%
     count(!!var)
 
-  #Flip coordinate if there is more than 5 groups
-  if (length(unique(pull(df, !!var))) > 5) {
-    ggp <- ggplot(df, aes(x = reorder(!!var, n), y = n, fill = !!var)) +
-      coord_flip()
+  #N groups
+  ngrp <- length(unique(pull(df, !!var)))
+  if (ngrp <= 30) {
+    textsize <- 10
+  } else if (ngrp > 30 & ngrp <= 40) {
+    textsize <- 8
+  } else if (ngrp > 40 & ngrp <= 50) {
+    textsize <- 7
   } else {
-    ggp <- ggplot(df, aes(x = reorder(!!var, desc(n)), y = n, fill = !!var))
+    textsize <- 5
+  }
+
+  #Flip coordinate if there is more than 5 groups
+  if (ngrp > 5) {
+    ggp <- ggplot(df, aes(x = reorder(!!var, n), y = n, fill = !!var)) +
+      coord_flip() +
+      theme_classic() +
+      theme(axis.title = element_text(face = "bold", size = 12),
+            axis.text.y = element_text(face = "bold", size = textsize),
+            axis.text.x = element_text(face = "bold", size = 10))
+  } else {
+    ggp <- ggplot(df, aes(x = reorder(!!var, desc(n)), y = n, fill = !!var)) +
+      theme_classic() +
+      theme(axis.title = element_text(face = "bold", size = 12),
+            axis.text.x = element_text(face = "bold", size = textsize),
+            axis.text.y = element_text(face = "bold", size = 10))
   }
 
   ggp +
     geom_bar(show.legend = FALSE,
              stat = "identity",
              color = "#555555") +
-    labs(x = quo_name(var), y = "Count") +
-    theme_classic() +
-    theme(axis.title = element_text(face = "bold", size = 12),
-          axis.text = element_text(face = "bold", size = 10))  +
+    labs(x = quo_name(var), y = "Count")  +
     scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
     scale_fill_viridis_d()
 
