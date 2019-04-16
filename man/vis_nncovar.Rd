@@ -11,7 +11,7 @@ vis_nncovar(.data, ..., .by = NULL)
 
 \item{...}{you can use this arguement to specify targeted numerical columns that will be used as y-axis variable}
 
-\item{.by}{color scatter by groups}
+\item{.by}{categorical columns names to color points by groups}
 }
 \value{
 a list of ggplots

@@ -5,6 +5,7 @@
 \alias{.prop}
 \alias{.color_bar}
 \alias{.apply_colorbar}
+\alias{.nonzero}
 \title{Some internals functions}
 \usage{
 .prop(x, nr)
@@ -12,6 +13,8 @@
 .color_bar(x, nr, color = "lightgreen", simple = TRUE)
 
 .apply_colorbar(x, nr)
+
+.nonzero(x)
 }
 \arguments{
 \item{x}{a numeric vector}

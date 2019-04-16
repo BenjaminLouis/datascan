@@ -2,7 +2,7 @@
 #'
 #' @param .data a data frame
 #' @param ... you can use this arguement to specify targeted numerical columns that will be used as y-axis variable
-#' @param .by color scatter by groups
+#' @param .by categorical columns names to color points by groups
 #'
 #' @return a list of ggplots
 #' @export
