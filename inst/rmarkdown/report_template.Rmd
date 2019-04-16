@@ -3,38 +3,61 @@ params:
   dataset: NULL 
   target: NULL
   regroup: TRUE
-  config: report_options
-title: "Exploratory Data Analysis report"
-author: "John Doe"
-date: "`r Sys.Date()`"
+title: "`r config_report$title`"
+author: "`r config_report$author`"
+date: "`r config_report$date`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
+# Options
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center',
-	results = "asis", dpi = 150)
+	results = "asis", dpi = 150, warning = FALSE)
 options(knitr.kable.NA = '')
 
+# Packages to load
 library(dplyr)
 library(knitr)
 library(kableExtra)
-#library(formattable)
 library(datascan)
 library(cowplot)
 
+# Dataset and caracteristics
 data <- if (!is.null(params$dataset)) {params$dataset} else {dplyr::starwars}
 nr <- nrow(data)
 nc <- ncol(data)
 ncnum <- select_if(data, is.numeric) %>% ncol()
 nccat <- select_if(data, ~is.factor(.x) | is.character(.x)) %>% ncol()
-#To avoid width options equal 0 
-nonzero <- function(x) {
-  if (x == 0) {
-    x <- 1
-  }
-  return(x)
-}
+
+# Columns as responses ?
 target <- params$target
+target_cat <- select(data, !!!target) %>% 
+  select_if(~is.factor(.x) | is.character(.x)) %>% 
+  colnames()
+ntarget_cat = length(target_cat)
+target_num <- select(data, !!!target) %>% 
+  select_if(is.numeric) %>% 
+  colnames()
+ntarget_num = length(target_num)
+
+# Number of covariation plots
+if (ntarget_cat != 0 & (nccat - ntarget_cat) != 0 ) {
+  nplot_cc <- ntarget_cat*(nccat - ntarget_cat)
+} else {
+  nplot_cc <- choose(nccat, 2)
+}
+if (ntarget_num != 0 & (ncnum - ntarget_num) != 0 ) {
+  nplot_nn <- ntarget_num*(ncnum - ntarget_num)
+} else {
+  nplot_nn <- choose(ncnum, 2)
+}
+if (ntarget_num != 0) {
+  nplot_nc <- ntarget_num*nccat
+} else {
+  nplot_nc <- ncnum*nccat
+}
+
+# Regroup groups ?
 regroup <- params$regroup
 ```
 
@@ -75,17 +98,16 @@ scc %>%
 
 ## Variation
 
+---
 ### Numerical columns
-
-```{r nonum}
-if (ncnum == 0) {
-  cat("There was no numerical columns in the dataset")
-}
-```
+---
 
 ```{r ifnumtable}
 if (ncnum > 0) {
+  cat("### Numerical columns", fill = TRUE)
+  cat("", fill = TRUE)
   cat("#### Summary table", fill = TRUE)
+  cat("", fill = TRUE)
   scan_numerics(data) %>%
   kable("html", escape = F, align = c("l", rep("r", 9)), digits = 2) %>% 
   kable_styling(full_width = F, bootstrap_options = "condensed")
@@ -102,7 +124,7 @@ if (ncnum == 1) {
 ```
 
 
-```{r ifnumplot2+, fig.width = 10, out.width = '100%',fig.asp = 0.8*nonzero(ceiling(ncnum/4))}
+```{r ifnumplot2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(ncnum/2)/2)}
 if (ncnum > 1) {
   cat("#### Graphics", fill = TRUE)
   cat("", fill = TRUE)
@@ -111,14 +133,147 @@ if (ncnum > 1) {
 }
 ```
 
-
+---
 ### Categorical columns
+---
 
-```{r nocat}
-if (nccat == 0) {
-  cat("There was no categorical columns in the dataset")
+
+```{r ifcatplot1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (nccat == 1) {
+  cat("### Categorical columns", fill = TRUE)
+  cat("", fill = TRUE)
+  plotcat <- vis_groups(data)
+  plotcat[[1]]
 }
 ```
+
+```{r ifcatplot2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(nccat/2)/2)}
+if (nccat > 1) {
+  cat("### Categorical columns", fill = TRUE)
+  cat("", fill = TRUE)
+  plotcat <- vis_groups(data)
+  plot_grid(plotlist = plotcat, align = "hv", ncol = 2)
+}
+```
+
+## Covariation
+
+### Global covariations
+
+---
+#### Correlations
+---
+
+```{r corr, out.width = '70%'}
+if (ncnum >= 2) {
+  cat("#### Correlations", fill = TRUE)
+  cat("", fill = TRUE)
+  vis_corr(data)
+}
+```
+
+---
+#### Bias corrected Cramer's V
+---
+
+```{r cramer, out.width = '70%'}
+if (nccat >= 2) {
+  cat("#### Bias corrected Cramer's V", fill = TRUE)
+  cat("", fill = TRUE)
+  vis_cramerv(data)
+}
+```
+
+---
+#### Linear R coefficient between numerical and categorical columns
+---
+
+```{r rlin, out.width = '70%'}
+if (nccat > 0 & ncnum > 0) {
+  cat("#### Linear R coefficient between numerical and categorical columns", fill = TRUE)
+  cat("", fill = TRUE)
+  vis_r(data)
+}
+```
+
+### Specific covariations
+
+---
+#### Numerical ~ Numerical
+---
+
+```{r num-num1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (nplot_nn == 1) {
+  cat("#### Numerical ~ Numerical", fill = TRUE)
+  cat("", fill = TRUE)
+  plotnumnum <- vis_nncovar(data, !!!syms(target_num))
+  plotnumnum[[1]]
+}
+```
+
+
+```{r num-num2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(nplot_nn/2)/2)}
+if (nplot_nn > 1) {
+  cat("#### Numerical ~ Numerical", fill = TRUE)
+  cat("", fill = TRUE)
+  plotnumnum <- vis_nncovar(data, !!!syms(target_num))
+  plot_grid(plotlist = plotnumnum, align = "hv", ncol = 2)
+}
+```
+
+
+---
+#### Numerical ~ Categorical
+---
+
+```{r num-cat1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (nplot_nc == 1) {
+  cat("#### Numerical ~ Categorical", fill = TRUE)
+  cat("", fill = TRUE)
+  plotnumcat <- vis_ngcovar(data, !!!syms(target_num), .regroup = regroup)
+  plotnumcat[[1]]
+}
+```
+
+
+```{r num-cat2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(nplot_nc/2)/2)}
+if (nplot_nc > 1) {
+  cat("#### Numerical ~ Categorical", fill = TRUE)
+  cat("", fill = TRUE)
+  plotnumcat <- vis_ngcovar(data,!!!syms(target_num), .regroup = regroup)
+  plot_grid(plotlist = plotnumcat, align = "hv", ncol = 2)
+}
+```
+
+
+
+---
+#### Categorical ~ Categorical
+---
+
+```{r cat-cat1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (nplot_cc == 1) {
+  cat("#### Categorical ~ Categorical", fill = TRUE)
+  cat("", fill = TRUE)
+  plotcatcat <- vis_ggcovar(data, !!!syms(target_cat), .regroup = regroup)
+  plotcatcat[[1]]
+}
+```
+
+
+```{r cat-cat2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(nplot_cc/2)/2)}
+if (nplot_cc > 1) {
+  cat("#### Categorical ~ Categorical", fill = TRUE)
+  cat("", fill = TRUE)
+  plotcatcat <- vis_ggcovar(data, !!!syms(target_cat), .regroup = regroup)
+  plot_grid(plotlist = plotcatcat, align = "hv", ncol = 2)
+}
+```
+
+
+---
+# Annexe
+---
 
 ---
 #```{r ifcattable}
@@ -139,135 +294,3 @@ if (nccat == 0) {
 ---
 
 
-```{r ifcatplot1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
-if (nccat == 1) {
-  plotcat <- vis_groups(data)
-  plotcat[[1]]
-}
-```
-
-```{r ifcatplot2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*nonzero(ceiling(nccat/4))}
-if (nccat > 1) {
-  plotcat <- vis_groups(data)
-  plot_grid(plotlist = plotcat, align = "hv", ncol = 2)
-}
-```
-
-## Covariation
-
-### Global covariations
-
-#### Correlations
-
-```{r num01}
-if (ncnum < 2) {
-  cat("There was less than 2 numerical columns in the dataset")
-}
-```
-
-
-```{r corr, out.width = '70%'}
-if (ncnum >= 2) {
-  vis_corr(data)
-}
-```
-
-#### Bias corrected Cramer's V
-
-```{r cat01}
-if (nccat < 2) {
-  cat("There was less than 2 categorical columns in the dataset")
-}
-```
-
-```{r cramer, out.width = '70%'}
-if (nccat >= 2) {
-  vis_cramerv(data)
-}
-```
-
-#### Linear R coefficient between numerical and categorical columns__
-
-```{r num0cat0}
-if (nccat == 0 | ncnum == 0) {
-  cat("There was no numerical or no categorical columns in the dataset")
-}
-```
-
-```{r rlin, out.width = '70%'}
-if (nccat > 0 & ncnum > 0) {
-  vis_r(data)
-}
-```
-
-### Specific covariations
-
-#### Numerical ~ Numerical
-
-```{r num01bis}
-if (ncnum < 2) {
-  cat("There was less than 2 numerical columns in the dataset")
-}
-```
-
-```{r num-num1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
-if (ncnum == 2) {
-  plotnumnum <- vis_nncovar(data)
-  plotnumnum[[1]]
-}
-```
-
-
-```{r num-num2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*nonzero(ceiling(ncnum*(ncnum - 1)/8))}
-if (ncnum > 2) {
-  plotnumnum <- vis_nncovar(data)
-  plot_grid(plotlist = plotnumnum, align = "hv", ncol = 2)
-}
-```
-
-#### Numerical ~ Categorical
-
-```{r num0cat0bis}
-if (nccat == 0 & ncnum == 0) {
-  cat("There was no numerical or no categorical columns in the dataset")
-}
-```
-
-```{r num-cat1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
-if (nccat == 1 & ncnum == 1) {
-  plotnumcat <- vis_ngcovar(data, .regroup = regroup)
-  plotnumcat[[1]]
-}
-```
-
-
-```{r num-cat2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*nonzero(ceiling(ncnum*nccat/8))}
-if (nccat != 0 & ncnum != 0 & nccat + ncnum > 2) {
-  plotnumcat <- vis_ngcovar(data, .regroup = regroup)
-  plot_grid(plotlist = plotnumcat, align = "hv", ncol = 2)
-}
-```
-
-#### Categoritcal ~ Categorical
-
-
-```{r cat01bis}
-if (nccat < 2) {
-  cat("There was less than 2 categorical columns in the dataset")
-}
-```
-
-```{r cat-cat1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
-if (nccat == 2) {
-  plotcatcat <- vis_ggcovar(data, .regroup = regroup)
-  plotcatcat[[1]]
-}
-```
-
-
-```{r cat-cat2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*nonzero(ceiling(nccat*(nccat - 1)/8))}
-if (nccat > 2) {
-  plotcatcat <- vis_ggcovar(data, .regroup = regroup)
-  plot_grid(plotlist = plotcatcat, align = "hv", ncol = 2)
-}
-```
