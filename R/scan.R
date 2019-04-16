@@ -6,7 +6,6 @@
 #' @param output_format see \link{render}
 #' @param output_file see \link{render}
 #' @param output_dir see \link{render}
-#' @param options list. Options for report
 #'
 #' @return a report at the format specified in output_format
 #' @export
@@ -17,11 +16,10 @@
 #'
 #' @examples
 #' ##ToDo
-create_report <- function(.data, ..., .regroup = TRUE,
-                          output_format = html_document(toc = TRUE, toc_depth = 2),
+scan <- function(.data, ..., .regroup = TRUE,
+                          output_format = html_document(toc = TRUE, toc_depth = 3, theme = "journal"),
                           output_file = "report.html",
-                          output_dir = getwd(),
-                          options = report_options()) {
+                          output_dir = getwd()) {
 
   target <- quos(...)
 
@@ -31,7 +29,7 @@ create_report <- function(.data, ..., .regroup = TRUE,
     output_format = output_format,
     output_file = output_file,
     output_dir = output_dir,
-    params = list(dataset = .data, target = target, regroup = .regroup, config = options)
+    params = list(dataset = .data, target = target, regroup = .regroup)
   )
 
   # Opening report
