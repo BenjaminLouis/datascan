@@ -20,6 +20,7 @@ vis_corr <- function(.data, .use = "pairwise.complete.obs", .method = "spearman"
     theme_classic() +
     theme(axis.title = element_blank(),
           axis.text = element_text(face = "bold", size = 10),
+          axis.text.x = element_text(angle = 45, hjust = -0.01),
           legend.position = "right",
           legend.title = element_text(face = "bold", size = 12))  +
     #scale_fill_viridis_c(option = "E", limits = c(-1, 1), alpha = 0.8) +

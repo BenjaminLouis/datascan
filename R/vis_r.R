@@ -22,6 +22,7 @@ vis_r <- function(.data) {
     theme_classic() +
     theme(axis.title = element_blank(),
           axis.text = element_text(face = "bold", size = 10),
+          axis.text.x = element_text(angle = 45, hjust = -0.01),
           legend.position = "right",
           legend.title = element_text(face = "bold", size = 12))  +
     scale_fill_gradient2(low = "#EAEDE9", mid = "gold2", high = "#601200",
