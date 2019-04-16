@@ -17,9 +17,10 @@
 #' @examples
 #' ##ToDo
 scan <- function(.data, ..., .regroup = TRUE,
-                          output_format = html_document(toc = TRUE, toc_depth = 3, theme = "journal"),
-                          output_file = "report.html",
-                          output_dir = getwd()) {
+                 output_format = html_document(toc = TRUE, toc_depth = 3, theme = "journal"),
+                 output_file = "report.html",
+                 output_dir = getwd(),
+                 clean = FALSE) {
 
   target <- quos(...)
 
@@ -29,7 +30,8 @@ scan <- function(.data, ..., .regroup = TRUE,
     output_format = output_format,
     output_file = output_file,
     output_dir = output_dir,
-    params = list(dataset = .data, target = target, regroup = .regroup)
+    params = list(dataset = .data, target = target, regroup = .regroup),
+    clean = clean
   )
 
   # Opening report

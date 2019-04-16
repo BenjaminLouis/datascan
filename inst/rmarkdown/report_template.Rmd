@@ -8,7 +8,6 @@ author: "`r config_report$author`"
 date: "`r config_report$date`"
 output: html_document
 css: custom.css
-clean: FALSE
 ---
 
 ```{r setup, include=FALSE}
@@ -57,6 +56,20 @@ if (ntarget_num != 0) {
   nplot_nc <- ntarget_num*nccat
 } else {
   nplot_nc <- ncnum*nccat
+}
+
+# If target, what should be draw ?
+if (ntarget_num == 0 & ntarget_cat != 0) {
+  draw_numnum <- FALSE
+  draw_numcat <- FALSE
+} else {
+  draw_numnum <- TRUE
+  draw_numcat <- TRUE
+}
+if (ntarget_num != 0 & ntarget_cat == 0) {
+  draw_catcat <- FALSE
+} else {
+  draw_catcat <- TRUE
 }
 
 # Regroup groups ?
@@ -263,7 +276,7 @@ if (nplot_nn > 0) {
 
 
 ```{r numnum1, fig.width = 5, out.width = '50%', fig.asp = 0.8, fig.pos = 'center'} 
-if (nplot_nn == 0) {
+if (nplot_nn == 0 & draw_numnum) {
   plotnumnum <- vis_nncovar(data, !!!syms(target_num))
   walk(plotnumnum, plot)
 }
@@ -272,7 +285,7 @@ if (nplot_nn == 0) {
 
 <div class = "float_img">
 ```{r numnum2+, fig.width = 5, out.width = '50%', fig.asp = 0.8} 
-if (nplot_nn > 1) {
+if (nplot_nn > 1 & draw_numnum) {
   plotnumnum <- vis_nncovar(data, !!!syms(target_num))
   walk(plotnumnum, plot)
 }
@@ -292,7 +305,7 @@ if (nplot_nc > 0) {
 
 
 ```{r numcat1, fig.width = 5, out.width = '50%', fig.asp = 0.8, fig.pos = 'center'}
-if (nplot_nc == 1) {
+if (nplot_nc == 1 & draw_numcat) {
   plotnumcat <- vis_ngcovar(data,!!!syms(target_num), .regroup = regroup)
   walk(plotnumcat, plot)
 }
@@ -301,7 +314,7 @@ if (nplot_nc == 1) {
 
 <div class = "float_img">
 ```{r numcat2+, fig.width = 5, out.width = '50%', fig.asp = 0.8}
-if (nplot_nc > 1) {
+if (nplot_nc > 1 & draw_numcat) {
   plotnumcat <- vis_ngcovar(data,!!!syms(target_num), .regroup = regroup)
   walk(plotnumcat, plot)
 }
@@ -322,7 +335,7 @@ if (nplot_cc > 0) {
 
 
 ```{r catcat1, fig.width = 5, out.width = '50%', fig.asp = 0.8, fig.pos = 'center'}
-if (nplot_cc == 1) {
+if (nplot_cc == 1 & draw_catcat) {
   plotcatcat <- vis_ggcovar(data, !!!syms(target_cat), .regroup = regroup)
   walk(plotcatcat, plot)
 }
@@ -331,7 +344,7 @@ if (nplot_cc == 1) {
 
 <div class = "float_img">
 ```{r catcat2+, fig.width = 5, out.width = '50%', fig.asp = 0.8}
-if (nplot_cc > 1) {
+if (nplot_cc > 1 & draw_catcat) {
   plotcatcat <- vis_ggcovar(data, !!!syms(target_cat), .regroup = regroup)
   walk(plotcatcat, plot)
 }
