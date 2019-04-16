@@ -31,3 +31,11 @@ NULL
   x[!is.na(x) & as.character(x) == "0"] <- .color_bar(x[!is.na(x) & as.character(x) == "0"], nr = nr)
   return(x)
 }
+
+#' @rdname utils-style
+#' @export
+.nonzero <- function(x) {
+  #To avoid width options equal 0
+  if (x == 0) { x <- 1}
+  return(x)
+}
