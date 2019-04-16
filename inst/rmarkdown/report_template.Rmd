@@ -8,6 +8,7 @@ author: "`r config_report$author`"
 date: "`r config_report$date`"
 output: html_document
 css: custom.css
+clean: FALSE
 ---
 
 ```{r setup, include=FALSE}
