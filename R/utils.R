@@ -90,5 +90,5 @@ NULL
   nas <- if (any(is.na(ok))) {NA_character_} else {"Other"}
   ok <- ok[!is.na(ok)]
   reco <- setNames(ok, ok)
-  recode(.cat, !!!reco, .default = "Others groups", .missing = nas)
+  recode(.cat, !!!reco, .default = "Others\ngroups", .missing = nas)
 }
