@@ -8,5 +8,5 @@
 #' @export
 report_options <- function(.title = "Exploratory Data Analysis report",
                            .author = "John Doe", .date = Sys.Date()) {
-  list(title = .title, author = .author, date = .date)
+  config_report <<- list(title = .title, author = .author, date = .date)
 }
