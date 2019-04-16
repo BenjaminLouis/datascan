@@ -75,8 +75,12 @@ NULL
 #' @examples
 #' .get_r(iris, "Species", "Sepal.Length")
 .get_r <- function(.data, .cat, .num) {
-  mod <- lm(formula = as.formula(paste0(.num, "~", .cat)), data = .data, na.action = na.omit)
-  sqrt(summary(mod)$r.squared)
+  if (length(unique(.data[,.cat])) < 2) {
+    NA_real_
+  } else {
+    mod <- lm(formula = as.formula(paste0(.num, "~", .cat)), data = .data, na.action = na.omit)
+    sqrt(summary(mod)$r.squared)
+  }
 }
 
 #' @rdname utils
