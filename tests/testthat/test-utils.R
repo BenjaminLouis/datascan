@@ -25,7 +25,7 @@ test_that("utils works", {
 
   #.transform_cat
   library(dplyr)
-  expect_true(any(.transform_cat(starwars$species) == "Others groups"))
+  expect_true(any(.transform_cat(starwars$species) == "Others\ngroups"))
 
 
 })

@@ -19,6 +19,7 @@ Imports:
     magrittr,
     purrr,
     rlang,
+    rmarkdown,
     stats,
     tibble,
     tidyr,
@@ -26,7 +27,6 @@ Imports:
 Suggests: 
     covr,
     knitr,
-    rmarkdown,
     testthat
 VignetteBuilder: 
     knitr

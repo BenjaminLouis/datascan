@@ -4,12 +4,14 @@
 \alias{vis_nncovar}
 \title{Scatter plots of all pairs of numerical variables in a data.frame}
 \usage{
-vis_nncovar(.data, ...)
+vis_nncovar(.data, ..., .by = NULL)
 }
 \arguments{
 \item{.data}{a data frame}
 
 \item{...}{you can use this arguement to specify targeted numerical columns that will be used as y-axis variable}
+
+\item{.by}{categorical columns names to color points by groups}
 }
 \value{
 a list of ggplots

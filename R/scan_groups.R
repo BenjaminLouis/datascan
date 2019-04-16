@@ -26,7 +26,8 @@ scan_groups <- function(.data) {
   catdata %>%
     gather(key = "variables", value = "groups") %>%
     group_by(variables) %>%
-    count(groups, sort = TRUE) %>%
+    count(groups) %>%
+    arrange(desc(n), .by_group = TRUE) %>%
     mutate(p = n/sum(n))
 
 }

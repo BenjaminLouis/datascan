@@ -4,7 +4,7 @@
 \alias{vis_corr}
 \title{plots correlation between numerical columns of a dataframe}
 \usage{
-vis_corr(.data, .use = "na.or.complete", .method = "spearman")
+vis_corr(.data, .use = "pairwise.complete.obs", .method = "spearman")
 }
 \arguments{
 \item{.data}{a dataframe}
