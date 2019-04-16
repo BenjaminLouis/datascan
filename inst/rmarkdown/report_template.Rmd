@@ -7,6 +7,7 @@ title: "`r config_report$title`"
 author: "`r config_report$author`"
 date: "`r config_report$date`"
 output: html_document
+css: custom.css
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +21,7 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 library(datascan)
-library(cowplot)
+library(purrr)
 
 # Dataset and caracteristics
 data <- if (!is.null(params$dataset)) {params$dataset} else {dplyr::starwars}
@@ -102,59 +103,93 @@ scc %>%
 ### Numerical columns
 ---
 
-```{r ifnumtable}
+```{r ifnum}
 if (ncnum > 0) {
   cat("### Numerical columns", fill = TRUE)
   cat("", fill = TRUE)
+}
+```
+
+---
+### Summary table
+---
+
+```{r ifnumtabletitle}
+if (ncnum > 0) {
   cat("#### Summary table", fill = TRUE)
   cat("", fill = TRUE)
+}
+```
+
+
+```{r ifnumtable}
+if (ncnum > 0) {
   scan_numerics(data) %>%
   kable("html", escape = F, align = c("l", rep("r", 9)), digits = 2) %>% 
   kable_styling(full_width = F, bootstrap_options = "condensed")
 }
 ```
 
-```{r ifnumplot1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+---
+#### Graphics
+---
+
+```{r ifnumplottitle}
+if (ncnum > 0) {
+  cat("#### Graphics", fill = TRUE)
+  cat("", fill = TRUE)
+}
+```
+
+
+```{r ifnumplot1, fig.width = 5, out.width = '50%', fig.asp = 0.8, fig.pos = 'center'}
 if (ncnum == 1) {
-  cat("#### Graphics", fill = TRUE)
-  cat("", fill = TRUE)
   plotnum <- vis_numerics(data)
-  plotnum[[1]]
+  walk(plotnum, plot)
 }
 ```
 
 
-```{r ifnumplot2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(ncnum/2)/2)}
+<div class = "float_img">
+```{r ifnumplot2+, fig.width = 5, out.width = '50%', fig.asp = 0.8}
 if (ncnum > 1) {
-  cat("#### Graphics", fill = TRUE)
-  cat("", fill = TRUE)
   plotnum <- vis_numerics(data)
-  plot_grid(plotlist = plotnum, align = "hv", ncol = 2)
+  walk(plotnum, plot)
 }
 ```
+</div>
 
 ---
 ### Categorical columns
 ---
 
 
-```{r ifcatplot1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
-if (nccat == 1) {
+```{r ifcatplottitle}
+if (nccat > 0) {
   cat("### Categorical columns", fill = TRUE)
   cat("", fill = TRUE)
-  plotcat <- vis_groups(data)
-  plotcat[[1]]
 }
 ```
 
-```{r ifcatplot2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(nccat/2)/2)}
-if (nccat > 1) {
-  cat("### Categorical columns", fill = TRUE)
-  cat("", fill = TRUE)
+
+
+```{r ifcatplot1, fig.width = 5, out.width = '50%', fig.asp = 0.8, fig.pos = 'center'}
+if (nccat == 1) {
   plotcat <- vis_groups(data)
-  plot_grid(plotlist = plotcat, align = "hv", ncol = 2)
+  walk(plotcat, plot)
 }
 ```
+
+
+
+<div class = "float_img">
+```{r ifcatplot2+, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (nccat > 1) {
+  plotcat <- vis_groups(data)
+  walk(plotcat, plot)
+}
+```
+</div>
 
 ## Covariation
 
@@ -164,10 +199,16 @@ if (nccat > 1) {
 #### Correlations
 ---
 
-```{r corr, out.width = '70%'}
+```{r corrtitle}
 if (ncnum >= 2) {
   cat("#### Correlations", fill = TRUE)
   cat("", fill = TRUE)
+}
+```
+
+
+```{r corr, out.width = '70%'}
+if (ncnum >= 2) {
   vis_corr(data)
 }
 ```
@@ -176,10 +217,15 @@ if (ncnum >= 2) {
 #### Bias corrected Cramer's V
 ---
 
-```{r cramer, out.width = '70%'}
+```{r cramertitle}
 if (nccat >= 2) {
   cat("#### Bias corrected Cramer's V", fill = TRUE)
   cat("", fill = TRUE)
+}
+```
+
+```{r cramer, out.width = '70%'}
+if (nccat >= 2) {
   vis_cramerv(data)
 }
 ```
@@ -188,10 +234,15 @@ if (nccat >= 2) {
 #### Linear R coefficient between numerical and categorical columns
 ---
 
-```{r rlin, out.width = '70%'}
+```{r rlintitle}
 if (nccat > 0 & ncnum > 0) {
   cat("#### Linear R coefficient between numerical and categorical columns", fill = TRUE)
   cat("", fill = TRUE)
+}
+```
+
+```{r rlin, out.width = '70%'}
+if (nccat > 0 & ncnum > 0) {
   vis_r(data)
 }
 ```
@@ -202,74 +253,89 @@ if (nccat > 0 & ncnum > 0) {
 #### Numerical ~ Numerical
 ---
 
-```{r num-num1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
-if (nplot_nn == 1) {
+```{r numnumtitle} 
+if (nplot_nn > 0) {
   cat("#### Numerical ~ Numerical", fill = TRUE)
   cat("", fill = TRUE)
-  plotnumnum <- vis_nncovar(data, !!!syms(target_num))
-  plotnumnum[[1]]
 }
 ```
 
 
-```{r num-num2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(nplot_nn/2)/2)}
+```{r numnum1, fig.width = 5, out.width = '50%', fig.asp = 0.8, fig.pos = 'center'} 
+if (nplot_nn == 0) {
+  plotnumnum <- vis_nncovar(data, !!!syms(target_num))
+  walk(plotnumnum, plot)
+}
+```
+
+
+<div class = "float_img">
+```{r numnum2+, fig.width = 5, out.width = '50%', fig.asp = 0.8} 
 if (nplot_nn > 1) {
-  cat("#### Numerical ~ Numerical", fill = TRUE)
-  cat("", fill = TRUE)
   plotnumnum <- vis_nncovar(data, !!!syms(target_num))
-  plot_grid(plotlist = plotnumnum, align = "hv", ncol = 2)
+  walk(plotnumnum, plot)
 }
 ```
-
+</div>
 
 ---
 #### Numerical ~ Categorical
 ---
 
-```{r num-cat1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+```{r numcattitle}
+if (nplot_nc > 0) {
+  cat("#### Numerical ~ Categorical", fill = TRUE)
+  cat("", fill = TRUE)
+}
+```
+
+
+```{r numcat1, fig.width = 5, out.width = '50%', fig.asp = 0.8, fig.pos = 'center'}
 if (nplot_nc == 1) {
-  cat("#### Numerical ~ Categorical", fill = TRUE)
-  cat("", fill = TRUE)
-  plotnumcat <- vis_ngcovar(data, !!!syms(target_num), .regroup = regroup)
-  plotnumcat[[1]]
-}
-```
-
-
-```{r num-cat2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(nplot_nc/2)/2)}
-if (nplot_nc > 1) {
-  cat("#### Numerical ~ Categorical", fill = TRUE)
-  cat("", fill = TRUE)
   plotnumcat <- vis_ngcovar(data,!!!syms(target_num), .regroup = regroup)
-  plot_grid(plotlist = plotnumcat, align = "hv", ncol = 2)
+  walk(plotnumcat, plot)
 }
 ```
 
+
+<div class = "float_img">
+```{r numcat2+, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+if (nplot_nc > 1) {
+  plotnumcat <- vis_ngcovar(data,!!!syms(target_num), .regroup = regroup)
+  walk(plotnumcat, plot)
+}
+```
+</div>
 
 
 ---
 #### Categorical ~ Categorical
 ---
 
-```{r cat-cat1, fig.width = 5, out.width = '50%', fig.asp = 0.8}
+```{r catcattitle}
+if (nplot_cc > 0) {
+  cat("#### Categorical ~ Categorical", fill = TRUE)
+  cat("", fill = TRUE)
+}
+```
+
+
+```{r catcat1, fig.width = 5, out.width = '50%', fig.asp = 0.8, fig.pos = 'center'}
 if (nplot_cc == 1) {
-  cat("#### Categorical ~ Categorical", fill = TRUE)
-  cat("", fill = TRUE)
   plotcatcat <- vis_ggcovar(data, !!!syms(target_cat), .regroup = regroup)
-  plotcatcat[[1]]
+  walk(plotcatcat, plot)
 }
 ```
 
 
-```{r cat-cat2+, fig.width = 10, out.width = '100%', fig.asp = 0.8*.nonzero(ceiling(nplot_cc/2)/2)}
+<div class = "float_img">
+```{r catcat2+, fig.width = 5, out.width = '50%', fig.asp = 0.8}
 if (nplot_cc > 1) {
-  cat("#### Categorical ~ Categorical", fill = TRUE)
-  cat("", fill = TRUE)
   plotcatcat <- vis_ggcovar(data, !!!syms(target_cat), .regroup = regroup)
-  plot_grid(plotlist = plotcatcat, align = "hv", ncol = 2)
+  walk(plotcatcat, plot)
 }
 ```
-
+</div>
 
 ---
 # Annexe
