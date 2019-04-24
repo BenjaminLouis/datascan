@@ -1,4 +1,4 @@
-#' Violin plot of a numerical column by groups of a categorical column in a dataframe
+#' Box plot of a numerical column by groups of a categorical column in a dataframe
 #'
 #' @param .data a dataframe
 #' @param .cat a catagorical vector
@@ -8,12 +8,12 @@
 #' @export
 #'
 #' @importFrom dplyr select group_by mutate pull
-#' @importFrom ggplot2 enquo ggplot aes geom_violin theme_classic theme element_text scale_fill_viridis_c labs quo_name
+#' @importFrom ggplot2 enquo ggplot aes geom_boxplot theme_classic theme element_text scale_fill_viridis_c labs quo_name
 #' @importFrom stats median reorder
 #'
 #' @examples
-#' plot_violin(iris, Species, Sepal.Length)
-plot_violin <- function(.data, .cat, .num) {
+#' plot_box(iris, Species, Sepal.Length)
+plot_box <- function(.data, .cat, .num) {
 
   varx <- enquo(.cat)
   vary <- enquo(.num)
@@ -26,7 +26,7 @@ plot_violin <- function(.data, .cat, .num) {
     pull(Median)
 
   ggp <- ggplot(df, aes(reorder(!!varx, !!vary, median, na.rm = TRUE), !!vary, fill = med)) +
-    geom_violin(show.legend = FALSE, draw_quantiles = 0.5, color = "#555555", na.rm = TRUE) +
+    geom_boxplot(show.legend = FALSE, color = "#555555", na.rm = TRUE) +
     theme_classic() +
     theme(axis.title = element_text(face = "bold", size = 12),
           axis.text = element_text(face = "bold", size = 10))  +

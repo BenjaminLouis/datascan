@@ -3,6 +3,7 @@
 #' @param .data a dataframe
 #' @param ... you can use this arguement to specify targeted numerical columns that will be used as y-axis variable
 #' @param .regroup if \code{TRUE}, groups with less than 5 occurences are grouped together under the name "Others_groups"
+#' @param type either "violin" for violin plots or "box" for boxplots
 #'
 #' @return a list of ggplot
 #' @export
@@ -24,7 +25,7 @@
 #' # With a target column
 #' vis_ngcovar(starwars, height)
 #' }
-vis_ngcovar <- function(.data, ..., .regroup = TRUE) {
+vis_ngcovar <- function(.data, ..., .regroup = TRUE, type = "violin") {
 
   target <- quos(...)
   target_name <- map_chr(target, quo_name)
@@ -52,9 +53,14 @@ vis_ngcovar <- function(.data, ..., .regroup = TRUE) {
       select(!!!syms(catname), !!!syms(numname))
   }
 
-  crossing(x = catname, y = numname) %>%
+  dt <- crossing(x = catname, y = numname) %>%
     mutate(data = map2(x, y, ~select(df, .x, .y))) %>%
-    pull(data)  %>%
-    map(~plot_violin(.x, .cat = !!sym(names(.x)[1]), .num = !!sym(names(.x)[2])))
+    pull(data)
+  if (type == "violin") {
+    map(dt, ~plot_violin(.x, .cat = !!sym(names(.x)[1]), .num = !!sym(names(.x)[2])))
+  } else if (type == "box") {
+    map(dt, ~plot_box(.x, .cat = !!sym(names(.x)[1]), .num = !!sym(names(.x)[2])))
+  }
+
 
 }
