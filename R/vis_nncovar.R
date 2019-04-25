@@ -28,6 +28,10 @@ vis_nncovar <- function(.data, ..., .by = NULL) {
   df <- select_if(.data, is.numeric)
   non_target_name <- setdiff(colnames(df), target_name)
 
+  if (.by == TRUE) {
+    .by <- select_if(.data, ~is.character(.x) | is.factor(.x)) %>% colnames()
+  }
+
   if (length(non_target_name) == 0) {
     non_target_name <- target_name
     target_name <- NULL
