@@ -75,7 +75,7 @@ NULL
 #' @examples
 #' .get_r(iris, "Species", "Sepal.Length")
 .get_r <- function(.data, .cat, .num) {
-  if (length(unique(.data[,.cat])) < 2) {
+  if (length(unique(.data[[.cat]])) < 2) {
     NA_real_
   } else {
     mod <- lm(formula = as.formula(paste0(.num, "~", .cat)), data = .data, na.action = na.omit)
@@ -100,3 +100,14 @@ NULL
   reco <- setNames(ok, ok)
   recode(.cat, !!!reco, .default = "Others\ngroups", .missing = nas)
 }
+
+#' @rdname utils
+#' @export
+#' @examples
+#' dt <- tibble::tibble('a/b' = rnorm(10))
+#' .clean_names(dt)
+.clean_names <- function(.data) {
+  names(.data) <- gsub("[[:punct:]]", "_", names(.data))
+  return(.data)
+}
+
