@@ -75,6 +75,9 @@ NULL
 #' @examples
 #' .get_r(iris, "Species", "Sepal.Length")
 .get_r <- function(.data, .cat, .num) {
+  .data <- .clean_names(.data)
+  .cat <- gsub("[[:punct:]]", "_", .cat)
+  .num <- gsub("[[:punct:]]", "_", .num)
   if (length(unique(.data[[.cat]])) < 2) {
     NA_real_
   } else {

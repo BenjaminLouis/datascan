@@ -14,6 +14,7 @@
 #' library(dplyr)
 #' scan_r(starwars)
 scan_r <- function(.data) {
+  .data <- .clean_names(.data)
   quanti <- .data %>%
     select_if(is.numeric) %>%
     colnames()
