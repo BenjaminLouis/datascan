@@ -8,7 +8,8 @@
 #' @return a ggplot
 #' @export
 #'
-#' @importFrom ggplot2 enquo ggplot aes geom_point labs quo_name theme_classic theme element_text scale_color_viridis_d
+#' @importFrom ggplot2 ggplot aes geom_point labs theme_classic theme element_text scale_color_viridis_d
+#' @importFrom rlang enquo quo_name
 #'
 #' @examples
 #' # With .by = NULL

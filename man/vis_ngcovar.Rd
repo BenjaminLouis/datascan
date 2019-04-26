@@ -4,7 +4,7 @@
 \alias{vis_ngcovar}
 \title{Violin plots for all pairs of numerical/categorical columns in a data frame}
 \usage{
-vis_ngcovar(.data, ..., .regroup = TRUE)
+vis_ngcovar(.data, ..., .regroup = TRUE, type = "violin", .by = NULL)
 }
 \arguments{
 \item{.data}{a dataframe}
@@ -12,6 +12,10 @@ vis_ngcovar(.data, ..., .regroup = TRUE)
 \item{...}{you can use this arguement to specify targeted numerical columns that will be used as y-axis variable}
 
 \item{.regroup}{if \code{TRUE}, groups with less than 5 occurences are grouped together under the name "Others_groups"}
+
+\item{type}{either "violin" for violin plots or "box" for boxplots}
+
+\item{.by}{categorical columns names to add a second categorical column}
 }
 \value{
 a list of ggplot

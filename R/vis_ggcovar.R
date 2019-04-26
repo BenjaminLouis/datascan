@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @importFrom dplyr select_if setdiff mutate_at vars mutate select pull
-#' @importFrom ggplot2 quos quo_name syms sym
+#' @importFrom rlang quos quo_name syms sym
 #' @importFrom purrr map2 map map_chr
 #' @importFrom tidyr crossing
 #' @importFrom utils combn

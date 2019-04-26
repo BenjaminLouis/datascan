@@ -6,13 +6,14 @@
 #' @param output_format see \link{render}
 #' @param output_file see \link{render}
 #' @param output_dir see \link{render}
+#' @param clean see \link{render}
 #'
 #' @return a report at the format specified in output_format
 #' @export
 #'
 #' @importFrom rmarkdown render html_document
 #' @importFrom utils browseURL
-#' @importFrom ggplot2 quos
+#' @importFrom rlang quos
 #'
 #' @examples
 #' ##ToDo

@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @importFrom dplyr select_if
-#' @importFrom ggplot2 syms
+#' @importFrom rlang syms
 #' @importFrom purrr map
 #'
 #' @examples

@@ -5,7 +5,8 @@
 #' @return a gpplot
 #' @export
 #'
-#' @importFrom ggplot2 ggplot aes sym geom_tile theme_classic theme element_blank element_text scale_fill_gradient2 scale_y_discrete scale_x_discrete labs
+#' @importFrom ggplot2 ggplot aes geom_tile theme_classic theme element_blank element_text scale_fill_gradient2 scale_y_discrete scale_x_discrete labs
+#' @importFrom rlang sym
 #'
 #' @examples
 #' library(dplyr)

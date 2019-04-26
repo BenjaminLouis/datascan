@@ -4,14 +4,16 @@
 \alias{plot_violin}
 \title{Violin plot of a numerical column by groups of a categorical column in a dataframe}
 \usage{
-plot_violin(.data, .cat, .num)
+plot_violin(.data, .cat, .num, .by)
 }
 \arguments{
 \item{.data}{a dataframe}
 
-\item{.cat}{a catagorical vector}
+\item{.cat}{a catagorical column name}
 
-\item{.num}{a numeric vector}
+\item{.num}{a numeric numerical name}
+
+\item{.by}{categorical columns names to add a second categorical column}
 }
 \value{
 a ggplot

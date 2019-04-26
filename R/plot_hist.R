@@ -8,6 +8,7 @@
 #' @export
 #'
 #' @importFrom ggplot2 ggplot geom_histogram aes labs theme_classic theme element_text scale_y_continuous scale_fill_viridis_d
+#' @importFrom rlang enquo
 #'
 #' @examples
 #' plot_hist(iris, Sepal.Length)

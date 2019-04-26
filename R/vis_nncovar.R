@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @importFrom dplyr select_if setdiff mutate select pull tibble
-#' @importFrom ggplot2 quos quo_name sym
+#' @importFrom rlang quos quo_name sym
 #' @importFrom purrr map2 map map_chr pmap
 #' @importFrom tidyr crossing
 #' @importFrom utils combn
@@ -28,8 +28,10 @@ vis_nncovar <- function(.data, ..., .by = NULL) {
   df <- select_if(.data, is.numeric)
   non_target_name <- setdiff(colnames(df), target_name)
 
-  if (.by == TRUE) {
-    .by <- select_if(.data, ~is.character(.x) | is.factor(.x)) %>% colnames()
+  if (!is.null(.by)) {
+    if (.by == TRUE) {
+      .by <- select_if(.data, ~is.character(.x) | is.factor(.x)) %>% colnames()
+    }
   }
 
   if (length(non_target_name) == 0) {
@@ -63,6 +65,5 @@ vis_nncovar <- function(.data, ..., .by = NULL) {
       pull(data) %>%
       map(~plot_scatter(.x, .num1 = !!sym(names(.x)[1]), .num2 = !!sym(names(.x)[2]), .by = !!sym(names(.x)[3])))
   }
-
 
 }

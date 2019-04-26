@@ -8,7 +8,8 @@
 #' @export
 #'
 #' @importFrom dplyr select mutate_all funs pull
-#' @importFrom ggplot2 enquo ggplot aes stat geom_count scale_size_area theme_classic theme element_text unit element_rect scale_color_viridis_c scale_y_discrete scale_x_discrete labs
+#' @importFrom ggplot2 ggplot aes stat geom_count scale_size_area theme_classic theme element_text unit element_rect scale_color_viridis_c scale_y_discrete scale_x_discrete labs
+#' @importFrom rlang enquo
 #' @importFrom purrr map_chr
 #' @importFrom tidyr drop_na
 #'

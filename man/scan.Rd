@@ -6,7 +6,7 @@
 \usage{
 scan(.data, ..., .regroup = TRUE, output_format = html_document(toc =
   TRUE, toc_depth = 3, theme = "journal"), output_file = "report.html",
-  output_dir = getwd())
+  output_dir = getwd(), clean = FALSE)
 }
 \arguments{
 \item{.data}{a data frame}
@@ -20,6 +20,8 @@ scan(.data, ..., .regroup = TRUE, output_format = html_document(toc =
 \item{output_file}{see \link{render}}
 
 \item{output_dir}{see \link{render}}
+
+\item{clean}{see \link{render}}
 }
 \value{
 a report at the format specified in output_format

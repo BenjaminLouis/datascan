@@ -7,7 +7,8 @@
 #' @export
 #'
 #' @importFrom dplyr pull select count desc
-#' @importFrom ggplot2 enquo ggplot aes coord_flip geom_bar labs quo_name theme_classic theme element_text scale_y_continuous scale_fill_viridis_d
+#' @importFrom ggplot2 ggplot aes coord_flip geom_bar labs theme_classic theme element_text scale_y_continuous scale_fill_viridis_d
+#' @importFrom rlang enquo quo_name
 #' @importFrom stats reorder
 #'
 #' @examples

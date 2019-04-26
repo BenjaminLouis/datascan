@@ -8,6 +8,7 @@
 \alias{.get_cramerv}
 \alias{.get_r}
 \alias{.transform_cat}
+\alias{.clean_names}
 \title{Some internals functions}
 \usage{
 .get_madm(.num)
@@ -21,6 +22,8 @@
 .get_r(.data, .cat, .num)
 
 .transform_cat(.cat)
+
+.clean_names(.data)
 }
 \arguments{
 \item{.num}{a numeric vector}
@@ -46,4 +49,6 @@ x <- sample(letters, 100, replace = TRUE)
 library(dplyr)
 .transform_cat(starwars$species)
 .transform_cat(starwars$gender)
+dt <- tibble::tibble('a/b' = rnorm(10))
+.clean_names(dt)
 }
