@@ -4,10 +4,12 @@
 \alias{vis_groups}
 \title{Bar plots of all categorical columns in a dataframe}
 \usage{
-vis_groups(.data)
+vis_groups(.data, .by)
 }
 \arguments{
 \item{.data}{a dataframe}
+
+\item{.by}{(optional) unquoted name of a categorical column}
 }
 \value{
 a list of ggplots

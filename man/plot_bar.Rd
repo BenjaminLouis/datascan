@@ -4,12 +4,14 @@
 \alias{plot_bar}
 \title{Bar plot of a categorical column in a dataframe}
 \usage{
-plot_bar(.data, .cat)
+plot_bar(.data, .cat, .by)
 }
 \arguments{
 \item{.data}{a dataframe}
 
 \item{.cat}{unquoted name of a categrocial column}
+
+\item{.by}{(optional) unquoted name of a categrocial column}
 }
 \value{
 a ggplot

@@ -44,15 +44,15 @@ plot_violin <- function(.data, .cat, .num, .by) {
       scale_fill_viridis_c() +
       labs(x = quo_name(varx))
   } else {
-    ggp <- ggplot(df, aes(reorder(!!varx, !!vary, median, na.rm = TRUE), !!vary)) +
-      geom_violin(aes(fill = !!by), draw_quantiles = 0.5, color = "#555555", na.rm = TRUE) +
+    ggp <- ggplot(df, aes(reorder(!!by, !!vary, median, na.rm = TRUE), !!vary)) +
+      geom_violin(aes(fill = !!varx), draw_quantiles = 0.5, color = "#555555", na.rm = TRUE) +
       theme_classic() +
       theme(axis.title = element_text(face = "bold", size = 12),
             axis.text = element_text(face = "bold", size = 10),
             legend.title = element_text(face = "bold", size = 12),
             legend.text = element_text(face = "bold", size = 10))  +
       scale_fill_viridis_d() +
-      labs(x = quo_name(varx))
+      labs(x = quo_name(by))
   }
 
   # Return plot

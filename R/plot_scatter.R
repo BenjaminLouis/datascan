@@ -36,7 +36,7 @@ plot_scatter <- function(.data, .num1, .num2, .by = NULL) {
     theme_classic() +
     theme(axis.title = element_text(face = "bold", size = 12),
           axis.text = element_text(face = "bold", size = 10),
-          legend.position = "bottom") +
+          legend.position = "right") +
     scale_color_viridis_d()
 
 }
