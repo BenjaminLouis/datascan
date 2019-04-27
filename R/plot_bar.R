@@ -93,7 +93,7 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE) {
   ggp +
     labs(x = quo_name(var), y = "Count")  +
     scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
-    scale_x_discrete(na.translate = nas)
+    scale_x_discrete(na.translate = nas) +
     scale_fill_viridis_d()
 
 
