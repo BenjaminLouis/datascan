@@ -4,7 +4,7 @@
 \alias{plot_bar}
 \title{Bar plot of a categorical column in a dataframe}
 \usage{
-plot_bar(.data, .cat, .by)
+plot_bar(.data, .cat, .by, nas = TRUE)
 }
 \arguments{
 \item{.data}{a dataframe}
@@ -12,6 +12,8 @@ plot_bar(.data, .cat, .by)
 \item{.cat}{unquoted name of a categrocial column}
 
 \item{.by}{(optional) unquoted name of a categrocial column}
+
+\item{nas}{logical. Should missing values be considered as group on x-axis}
 }
 \value{
 a ggplot

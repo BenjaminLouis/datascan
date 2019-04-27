@@ -4,7 +4,8 @@
 \alias{vis_ngcovar}
 \title{Violin plots for all pairs of numerical/categorical columns in a data frame}
 \usage{
-vis_ngcovar(.data, ..., .regroup = TRUE, type = "violin", .by = NULL)
+vis_ngcovar(.data, ..., .regroup = TRUE, type = "violin", .by = NULL,
+  nas = TRUE)
 }
 \arguments{
 \item{.data}{a dataframe}
@@ -16,6 +17,8 @@ vis_ngcovar(.data, ..., .regroup = TRUE, type = "violin", .by = NULL)
 \item{type}{either "violin" for violin plots or "box" for boxplots}
 
 \item{.by}{categorical columns names to add a second categorical column}
+
+\item{nas}{logical. Should missing values be considered as group on x-axis}
 }
 \value{
 a list of ggplot

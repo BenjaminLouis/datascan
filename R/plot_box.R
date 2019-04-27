@@ -4,6 +4,7 @@
 #' @param .cat a catagorical column name
 #' @param .num a numeric numerical name
 #' @param .by categorical columns names to add a second categorical column
+#' @param nas logical. Should missing values be considered as group on x-axis
 #'
 #' @return a ggplot
 #' @export
@@ -15,7 +16,7 @@
 #'
 #' @examples
 #' plot_box(iris, Species, Sepal.Length)
-plot_box <- function(.data, .cat, .num, .by) {
+plot_box <- function(.data, .cat, .num, .by, nas = TRUE) {
 
   varx <- enquo(.cat)
   vary <- enquo(.num)
@@ -29,18 +30,20 @@ plot_box <- function(.data, .cat, .num, .by) {
 
   df <- select(.data, !!varx, !!vary, !!by)
 
-  med <- df %>%
-    group_by(!!varx) %>%
-    mutate(Median = median(!!vary, na.rm = TRUE)) %>%
-    pull(Median)
+  # med <- df %>%
+  #   group_by(!!varx) %>%
+  #   mutate(Median = median(!!vary, na.rm = TRUE)) %>%
+  #   pull(Median)
 
   if (missing(.by)) {
-    ggp <- ggplot(df, aes(reorder(!!varx, !!vary, median, na.rm = TRUE), !!vary, fill = med)) +
+    ggp <- ggplot(df, aes(reorder(!!varx, !!vary, median, na.rm = TRUE), !!vary,
+                          fill = reorder(!!varx, !!vary, median, na.rm = TRUE))) +
       geom_boxplot(show.legend = FALSE, color = "#555555", na.rm = TRUE) +
       theme_classic() +
       theme(axis.title = element_text(face = "bold", size = 12),
             axis.text = element_text(face = "bold", size = 10))  +
-      scale_fill_viridis_c() +
+      scale_fill_viridis_d() +
+      scale_x_discrete(na.translate = nas) +
       labs(x = quo_name(varx))
   } else {
     ggp <- ggplot(df, aes(reorder(!!by, !!vary, median, na.rm = TRUE), !!vary)) +
@@ -51,6 +54,7 @@ plot_box <- function(.data, .cat, .num, .by) {
             legend.title = element_text(face = "bold", size = 12),
             legend.text = element_text(face = "bold", size = 10))  +
       scale_fill_viridis_d() +
+      scale_x_discrete(na.translate = nas) +
       labs(x = quo_name(by))
   }
 

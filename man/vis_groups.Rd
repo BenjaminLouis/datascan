@@ -4,12 +4,14 @@
 \alias{vis_groups}
 \title{Bar plots of all categorical columns in a dataframe}
 \usage{
-vis_groups(.data, .by)
+vis_groups(.data, .by, nas = TRUE)
 }
 \arguments{
 \item{.data}{a dataframe}
 
 \item{.by}{(optional) unquoted name of a categorical column}
+
+\item{nas}{logical. Should missing values be considered as group on x-axis}
 }
 \value{
 a list of ggplots

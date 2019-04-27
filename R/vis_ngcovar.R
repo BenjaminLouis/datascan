@@ -5,6 +5,7 @@
 #' @param .regroup if \code{TRUE}, groups with less than 5 occurences are grouped together under the name "Others_groups"
 #' @param type either "violin" for violin plots or "box" for boxplots
 #' @param .by categorical columns names to add a second categorical column
+#' @param nas logical. Should missing values be considered as group on x-axis
 #'
 #' @return a list of ggplot
 #' @export
@@ -26,7 +27,7 @@
 #' # With a target column
 #' vis_ngcovar(starwars, height)
 #' }
-vis_ngcovar <- function(.data, ..., .regroup = TRUE, type = "violin", .by = NULL) {
+vis_ngcovar <- function(.data, ..., .regroup = TRUE, type = "violin", .by = NULL, nas = TRUE) {
 
   target <- quos(...)
   target_name <- map_chr(target, quo_name)
@@ -68,9 +69,11 @@ vis_ngcovar <- function(.data, ..., .regroup = TRUE, type = "violin", .by = NULL
       mutate(data = map2(x, y, ~select(df, .x, .y))) %>%
       pull(data)
       if (type == "violin") {
-        map(dt, ~plot_violin(.x, .cat = !!sym(names(.x)[1]), .num = !!sym(names(.x)[2])))
+        map(dt, ~plot_violin(.x, .cat = !!sym(names(.x)[1]), .num = !!sym(names(.x)[2]),
+                             nas = nas))
       } else if (type == "box") {
-        map(dt, ~plot_box(.x, .cat = !!sym(names(.x)[1]), .num = !!sym(names(.x)[2])))
+        map(dt, ~plot_box(.x, .cat = !!sym(names(.x)[1]), .num = !!sym(names(.x)[2]),
+                          nas = nas))
       }
   } else {
     dt <- dfcross %>%
@@ -78,10 +81,10 @@ vis_ngcovar <- function(.data, ..., .regroup = TRUE, type = "violin", .by = NULL
       pull(data)
     if (type == "violin") {
       map(dt, ~plot_violin(.x, .cat = !!sym(names(.x)[1]), .num = !!sym(names(.x)[2]),
-                           .by = !!sym(names(.x)[3])))
+                           .by = !!sym(names(.x)[3]), nas = nas))
     } else if (type == "box") {
       map(dt, ~plot_box(.x, .cat = !!sym(names(.x)[1]), .num = !!sym(names(.x)[2]),
-                        .by = !!sym(names(.x)[3])))
+                        .by = !!sym(names(.x)[3]), nas = nas))
     }
 
   }

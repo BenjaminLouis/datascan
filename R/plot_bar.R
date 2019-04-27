@@ -3,6 +3,7 @@
 #' @param .data a dataframe
 #' @param .cat unquoted name of a categrocial column
 #' @param .by (optional) unquoted name of a categrocial column
+#' @param nas logical. Should missing values be considered as group on x-axis
 #'
 #' @return a ggplot
 #' @export
@@ -11,11 +12,12 @@
 #' @importFrom ggplot2 ggplot aes coord_flip geom_bar labs theme_classic theme element_text scale_y_continuous scale_fill_viridis_d
 #' @importFrom rlang enquo quo_name
 #' @importFrom stats reorder
+#' @importFrom tidyr complete
 #'
 #' @examples
 #' library(dplyr)
 #' plot_bar(starwars, eye_color)
-plot_bar <- function(.data, .cat, .by) {
+plot_bar <- function(.data, .cat, .by, nas = TRUE) {
 
   var <- enquo(.cat)
 
@@ -91,6 +93,7 @@ plot_bar <- function(.data, .cat, .by) {
   ggp +
     labs(x = quo_name(var), y = "Count")  +
     scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
+    scale_x_discrete(na.translate = nas)
     scale_fill_viridis_d()
 
 

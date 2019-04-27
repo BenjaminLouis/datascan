@@ -2,6 +2,7 @@
 #'
 #' @param .data a dataframe
 #' @param .by (optional) unquoted name of a categorical column
+#' @param nas logical. Should missing values be considered as group on x-axis
 #'
 #' @return a list of ggplots
 #' @export
@@ -13,7 +14,7 @@
 #' @examples
 #' library(dplyr)
 #' vis_groups(starwars)
-vis_groups <- function(.data, .by) {
+vis_groups <- function(.data, .by, nas = TRUE) {
   # Select cat columns
   catdata <- select_if(.data, ~is.character(.x) | is.factor(.x))
   # There should be numeric colmns
@@ -26,7 +27,7 @@ vis_groups <- function(.data, .by) {
     by <- enquo(.by)
     # Get the distr
     catnames <- setdiff(names(catdata), quo_name(by))
-    map(syms(catnames), plot_bar, .data = catdata, .by = !!by)
+    map(syms(catnames), plot_bar, .data = catdata, .by = !!by, nas = nas)
   }
 
 }

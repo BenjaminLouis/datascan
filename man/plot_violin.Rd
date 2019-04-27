@@ -4,7 +4,7 @@
 \alias{plot_violin}
 \title{Violin plot of a numerical column by groups of a categorical column in a dataframe}
 \usage{
-plot_violin(.data, .cat, .num, .by)
+plot_violin(.data, .cat, .num, .by, nas = TRUE)
 }
 \arguments{
 \item{.data}{a dataframe}
@@ -14,6 +14,8 @@ plot_violin(.data, .cat, .num, .by)
 \item{.num}{a numeric numerical name}
 
 \item{.by}{categorical columns names to add a second categorical column}
+
+\item{nas}{logical. Should missing values be considered as group on x-axis}
 }
 \value{
 a ggplot
