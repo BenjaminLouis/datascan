@@ -33,7 +33,12 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
   df <- select(.data, !!var, !!by)
 
   #N groups
-  ngrp <- length(unique(pull(df, !!var)))
+  if (missing(.by)) {
+    ngrp <- length(unique(pull(df, !!var)))
+  } else {
+    ngrp <- length(unique(pull(df, !!by)))
+  }
+
   if (ngrp <= 30) {
     textsize <- 10
   } else if (ngrp > 30 & ngrp <= 40) {
@@ -108,7 +113,7 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
   }
 
   ggp <- ggp +
-    labs(x = quo_name(var), y = sub("^.", toupper(substr(bytype, 1, 1)), bytype))  +
+    labs(y = sub("^.", toupper(substr(bytype, 1, 1)), bytype))  +
     scale_x_discrete(na.translate = nas) +
     scale_fill_viridis_d()
   if (bytype == "percent") {
