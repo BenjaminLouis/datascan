@@ -2,6 +2,7 @@
 #'
 #' @param .data a dataframe
 #' @param .num a numeric vector
+#' @param .by (optional) unquoted name of a categrocial column
 #' @param .bins bins argument for \code{geom_histogram}
 #'
 #' @return a ggplot object
@@ -12,12 +13,18 @@
 #'
 #' @examples
 #' plot_hist(iris, Sepal.Length)
-plot_hist <- function(.data, .num, .bins = ".get_bins") {
+plot_hist <- function(.data, .num, .by, .bins = ".get_bins") {
 
   var <- enquo(.num)
 
+  if (missing(.by)) {
+    by <- quo(NULL)
+  } else {
+    by <- enquo(.by)
+  }
+
   # Remove NAs
-  df <- select(.data, !!var) %>%
+  df <- select(.data, !!var, !!by) %>%
     drop_na()
   # Test if numeric
   if (!is.numeric(pull(df, !!var))) {stop(".num should be a numerical column")}
@@ -25,13 +32,27 @@ plot_hist <- function(.data, .num, .bins = ".get_bins") {
   bound = pull(df, !!var) %>% min()
   bi <- do.call(.bins, list(.num = pull(df, !!var)))
   # Get the plot
-  ggp <- ggplot(df, aes(!!var, fill = ".num")) +
-    geom_histogram(show.legend = FALSE, bins = bi,
-                   boundary = bound, color = "#555555") +
-    labs(x = quo_name(var), y = "Count") +
+  if (missing(.by)) {
+    ggp <- ggplot(df, aes(!!var, fill = ".num")) +
+      geom_histogram(show.legend = FALSE, bins = bi,
+                     boundary = bound, color = "#555555") +
+      labs(x = quo_name(var), y = "Count")
+  } else {
+    ggp <- ggplot(df, aes(!!var, fill = !!by, color = !!by)) +
+      geom_histogram(aes( y = ..density..), show.legend = TRUE,
+                     bins = bi,
+                     boundary = bound,
+                     position = "identity", alpha = 0.5) +
+      geom_density(alpha = 0.6) +
+      scale_color_viridis_d(option = "E") +
+      labs(x = quo_name(var), y = "Density")
+  }
+  ggp <- ggp +
     theme_classic() +
     theme(axis.title = element_text(face = "bold", size = 12),
-          axis.text = element_text(face = "bold", size = 10))  +
+          axis.text = element_text(face = "bold", size = 10),
+          legend.title = element_text(face = "bold", size = 12),
+          legend.text = element_text(face = "bold", size = 10))  +
     scale_y_continuous(limits = c(0, NA), expand = c(0, 0)) +
     scale_fill_viridis_d(option = "E")
   # Return plot
