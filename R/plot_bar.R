@@ -60,7 +60,8 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
         geom_bar(show.legend = FALSE, stat = "identity", color = "#555555") +
         coord_flip() +
         theme_classic() +
-        theme(axis.title = element_text(face = "bold", size = 12),
+        theme(axis.title.x = element_text(face = "bold", size = 12),
+              axis.title.y = element_blank(),
               axis.text.y = element_text(face = "bold", size = textsize),
               axis.text.x = element_text(face = "bold", size = 10))
     } else {
@@ -78,7 +79,8 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
         geom_bar(stat = "identity", color = "#555555", position = "dodge") +
         coord_flip() +
         theme_classic() +
-        theme(axis.title = element_text(face = "bold", size = 12),
+        theme(axis.title.x = element_text(face = "bold", size = 12),
+              axis.title.y = element_blank(),
               axis.text.y = element_text(face = "bold", size = textsize),
               axis.text.x = element_text(face = "bold", size = 10))
     }
@@ -89,7 +91,8 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
       ggplot(aes(x = reorder(!!var, n), y = n, fill = !!var)) +
       geom_bar(show.legend = FALSE, stat = "identity", color = "#555555") +
       theme_classic() +
-      theme(axis.title = element_text(face = "bold", size = 12),
+      theme(axis.title.y = element_text(face = "bold", size = 12),
+            axis.title.x = element_blank(),
             axis.text.x = element_text(face = "bold", size = textsize),
             axis.text.y = element_text(face = "bold", size = 10))
     } else {
@@ -106,7 +109,8 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
         ggplot(aes(x = !!by, y = n, fill = !!var)) +
         geom_bar(stat = "identity", color = "#555555", position = "dodge") +
         theme_classic() +
-        theme(axis.title = element_text(face = "bold", size = 12),
+        theme(axis.title.y = element_text(face = "bold", size = 12),
+              axis.title.x = element_blank(),
               axis.text.x = element_text(face = "bold", size = textsize),
               axis.text.y = element_text(face = "bold", size = 10))
     }
