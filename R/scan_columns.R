@@ -14,7 +14,7 @@
 scan_columns <- function(.data) {
   df <- .data
   data.frame(Name = names(df)) %>%
-    mutate(Class = map_chr(df, class)) %>%
+    mutate(Class = map_chr(df, ~class(.x)[1])) %>%
     mutate(Unique = map_int(df, ~length(unique(.x)))) %>%
     mutate(n_na = map_int(df, ~sum(is.na(.x)))) %>%
     mutate(p_na = n_na/nrow(df)) %>%

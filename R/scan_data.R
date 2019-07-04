@@ -14,7 +14,7 @@ scan_data <- function(.data) {
   rbind(
     c("Rows", nrow(.data)),
     c("Columns", ncol(.data)),
-    map_chr(.data, class) %>%
+    map_chr(.data, ~class(.x)[1]) %>%
       table() %>%
       as_tibble(),
     c("All NAs rows",
