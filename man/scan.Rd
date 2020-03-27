@@ -4,9 +4,15 @@
 \alias{scan}
 \title{Render EDA report}
 \usage{
-scan(.data, ..., .regroup = TRUE, output_format = html_document(toc =
-  TRUE, toc_depth = 3, theme = "journal"), output_file = "report.html",
-  output_dir = getwd(), clean = FALSE)
+scan(
+  .data,
+  ...,
+  .regroup = TRUE,
+  output_format = html_document(toc = TRUE, toc_depth = 3, theme = "journal"),
+  output_file = "report.html",
+  output_dir = getwd(),
+  clean = FALSE
+)
 }
 \arguments{
 \item{.data}{a data frame}

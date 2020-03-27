@@ -4,8 +4,14 @@
 \alias{vis_ngcovar}
 \title{Violin plots for all pairs of numerical/categorical columns in a data frame}
 \usage{
-vis_ngcovar(.data, ..., .regroup = TRUE, type = "violin", .by = NULL,
-  nas = TRUE)
+vis_ngcovar(
+  .data,
+  ...,
+  .regroup = TRUE,
+  type = "violin",
+  .by = NULL,
+  nas = TRUE
+)
 }
 \arguments{
 \item{.data}{a dataframe}

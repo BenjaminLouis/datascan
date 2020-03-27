@@ -4,7 +4,15 @@
 \alias{plot_bar}
 \title{Bar plot of a categorical column in a dataframe}
 \usage{
-plot_bar(.data, .cat, .by, nas = TRUE)
+plot_bar(
+  .data,
+  .cat,
+  .by,
+  nas = TRUE,
+  bytype = "count",
+  strwidth = 30,
+  order = TRUE
+)
 }
 \arguments{
 \item{.data}{a dataframe}
@@ -14,6 +22,12 @@ plot_bar(.data, .cat, .by, nas = TRUE)
 \item{.by}{(optional) unquoted name of a categrocial column}
 
 \item{nas}{logical. Should missing values be considered as group on x-axis}
+
+\item{bytype}{only if \code{.by} argument is given. Either "count" or "percent" for y-axis}
+
+\item{strwidth}{with of labels (for \code{stringr::str_wrap})}
+
+\item{order}{(lgl) should the group be ordered by frequency? (chr) Order of .cat groups in barplot}
 }
 \value{
 a ggplot

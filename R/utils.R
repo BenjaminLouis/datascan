@@ -71,6 +71,7 @@ NULL
 
 #' @rdname utils
 #' @importFrom stats lm as.formula na.omit
+#' @importFrom tidyr drop_na
 #' @export
 #' @examples
 #' .get_r(iris, "Species", "Sepal.Length")
@@ -78,10 +79,12 @@ NULL
   .data <- .clean_names(.data)
   .cat <- gsub("[[:punct:]]", "_", .cat)
   .num <- gsub("[[:punct:]]", "_", .num)
+  form <- as.formula(paste0(.num, "~", .cat))
+  .data <- drop_na(.data, .cat, .num)
   if (length(unique(.data[[.cat]])) < 2) {
     NA_real_
   } else {
-    mod <- lm(formula = as.formula(paste0(.num, "~", .cat)), data = .data, na.action = na.omit)
+    mod <- lm(formula = form, data = .data, na.action = na.omit)
     sqrt(summary(mod)$r.squared)
   }
 }

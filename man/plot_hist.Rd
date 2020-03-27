@@ -4,14 +4,18 @@
 \alias{plot_hist}
 \title{Historgram of a numerical column in a dataframe}
 \usage{
-plot_hist(.data, .num, .bins = ".get_bins")
+plot_hist(.data, .num, .by, .bins = ".get_bins", .binwidth = NULL)
 }
 \arguments{
 \item{.data}{a dataframe}
 
 \item{.num}{a numeric vector}
 
+\item{.by}{(optional) unquoted name of a categrocial column}
+
 \item{.bins}{bins argument for \code{geom_histogram}}
+
+\item{.binwidth}{binwidth argument for \code{geom_histogram}. Overrides .bins}
 }
 \value{
 a ggplot object

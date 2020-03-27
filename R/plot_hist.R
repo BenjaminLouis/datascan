@@ -4,16 +4,17 @@
 #' @param .num a numeric vector
 #' @param .by (optional) unquoted name of a categrocial column
 #' @param .bins bins argument for \code{geom_histogram}
+#' @param .binwidth binwidth argument for \code{geom_histogram}. Overrides .bins
 #'
 #' @return a ggplot object
 #' @export
 #'
-#' @importFrom ggplot2 ggplot geom_histogram aes labs theme_classic theme element_text scale_y_continuous scale_fill_viridis_d
+#' @importFrom ggplot2 ggplot geom_histogram aes labs theme_classic theme element_text scale_y_continuous scale_fill_viridis_d geom_density
 #' @importFrom rlang enquo
 #'
 #' @examples
 #' plot_hist(iris, Sepal.Length)
-plot_hist <- function(.data, .num, .by, .bins = ".get_bins") {
+plot_hist <- function(.data, .num, .by, .bins = ".get_bins", .binwidth = NULL) {
 
   var <- enquo(.num)
 
@@ -30,17 +31,23 @@ plot_hist <- function(.data, .num, .by, .bins = ".get_bins") {
   if (!is.numeric(pull(df, !!var))) {stop(".num should be a numerical column")}
 
   bound = pull(df, !!var) %>% min()
-  bi <- do.call(.bins, list(.num = pull(df, !!var)))
+  if (is.character(.bins)) {
+    bi <- do.call(.bins, list(.num = pull(df, !!var)))
+  }
+  if (is.numeric(.bins)) {
+    bi <- .bins
+  }
+
   # Get the plot
   if (missing(.by)) {
     ggp <- ggplot(df, aes(!!var, fill = ".num")) +
-      geom_histogram(show.legend = FALSE, bins = bi,
+      geom_histogram(show.legend = FALSE, bins = bi, binwidth = .binwidth,
                      boundary = bound, color = "#555555") +
       labs(x = quo_name(var), y = "Count")
   } else {
     ggp <- ggplot(df, aes(!!var, fill = !!by, color = !!by)) +
       geom_histogram(aes( y = ..density..), show.legend = TRUE,
-                     bins = bi,
+                     bins = bi, binwidth = .binwidth,
                      boundary = bound,
                      position = "identity", alpha = 0.5) +
       geom_density(alpha = 0.6) +

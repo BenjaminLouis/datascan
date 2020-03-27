@@ -5,20 +5,23 @@
 #' @param .by (optional) unquoted name of a categrocial column
 #' @param nas logical. Should missing values be considered as group on x-axis
 #' @param bytype only if \code{.by} argument is given. Either "count" or "percent" for y-axis
+#' @param strwidth with of labels (for \code{stringr::str_wrap})
+#' @param order (lgl) should the group be ordered by frequency? (chr) Order of .cat groups in barplot
 #'
 #' @return a ggplot
 #' @export
 #'
-#' @importFrom dplyr pull select count desc
+#' @importFrom dplyr pull select count desc group_by ungroup
 #' @importFrom ggplot2 ggplot aes coord_flip geom_bar labs theme_classic theme element_text scale_y_continuous scale_fill_viridis_d
-#' @importFrom rlang enquo quo_name
+#' @importFrom rlang enquo quo_name ':='
 #' @importFrom stats reorder
 #' @importFrom tidyr complete
+#' @importFrom stringr str_wrap
 #'
 #' @examples
 #' library(dplyr)
 #' plot_bar(starwars, eye_color)
-plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
+plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 30, order = TRUE) {
 
   var <- enquo(.cat)
 
@@ -55,8 +58,27 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
   if (ngrp > 5) {
     if (missing(.by)) {
       ggp <- df %>%
-        count(!!var) %>%
-        ggplot(aes(x = reorder(!!var, n), y = n, fill = !!var)) +
+        count(!!var)
+      if (is.logical(order)) {
+        if (order) {
+          ggp <- ggp %>%
+            mutate(!!var := str_wrap(!!var, strwidth)) %>%
+            ggplot(aes(x = reorder(!!var, desc(n)), y = n, fill = !!var))
+        } else {
+          ggp <- ggp %>%
+            mutate(!!var := str_wrap(!!var, strwidth)) %>%
+            ggplot(aes(x = !!var, y = n, fill = !!var))
+        }
+      } else if (is.character(order)) {
+        ggp <- ggp %>%
+          mutate(!!var := factor(str_wrap(!!var, strwidth),
+                                 levels = str_wrap(order, strwidth),
+                                 ordered = TRUE)) %>%
+          ggplot(aes(x = !!var, y = n, fill = !!var))
+      } else {
+        stop("order argument should be either a logical or a character vector")
+      }
+      ggp <- ggp +
         geom_bar(show.legend = FALSE, stat = "identity", color = "#555555") +
         coord_flip() +
         theme_classic() +
@@ -74,8 +96,26 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
           mutate(n = n/sum(n)) %>%
           ungroup()
       }
-      ggp <- ggp %>%
-        ggplot(aes(x = !!by, y = n, fill = !!var)) +
+      if (is.logical(order)) {
+        if (order) {
+          ggp <- ggp %>%
+            mutate(!!by := str_wrap(!!by, strwidth)) %>%
+            ggplot(aes(x = reorder(!!by, desc(n)), y = n, fill = !!var))
+        } else {
+          ggp <- ggp %>%
+            mutate(!!by := str_wrap(!!by, strwidth)) %>%
+            ggplot(aes(x = !!by, y = n, fill = !!var))
+        }
+      } else if (is.character(order)) {
+        ggp <- ggp %>%
+          mutate(!!by := factor(str_wrap(!!by, strwidth),
+                                 levels = str_wrap(order, strwidth),
+                                 ordered = TRUE)) %>%
+          ggplot(aes(x = !!by, y = n, fill = !!var))
+      } else {
+        stop("order argument should be either a logical or a character vector")
+      }
+      ggp <- ggp +
         geom_bar(stat = "identity", color = "#555555", position = "dodge") +
         coord_flip() +
         theme_classic() +
@@ -86,9 +126,29 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
     }
   } else {
     if (missing(.by)) {
-    ggp <- df %>%
-      count(!!var) %>%
-      ggplot(aes(x = reorder(!!var, n), y = n, fill = !!var)) +
+      ggp <- df %>%
+        count(!!var) %>%
+        mutate(!!var := str_wrap(!!var, strwidth))
+      if (is.logical(order)) {
+        if (order) {
+          ggp <- ggp %>%
+            mutate(!!var := str_wrap(!!var, strwidth)) %>%
+            ggplot(aes(x = reorder(!!var, desc(n)), y = n, fill = !!var))
+        } else {
+          ggp <- ggp %>%
+            mutate(!!var := str_wrap(!!var, strwidth)) %>%
+            ggplot(aes(x = !!var, y = n, fill = !!var))
+        }
+      } else if (is.character(order)) {
+        ggp <- ggp %>%
+          mutate(!!var := factor(str_wrap(!!var, strwidth),
+                                 levels = str_wrap(order, strwidth),
+                                 ordered = TRUE)) %>%
+          ggplot(aes(x = !!var, y = n, fill = !!var))
+      } else {
+        stop("order argument should be either a logical or a character vector")
+      }
+      ggp <- ggp +
       geom_bar(show.legend = FALSE, stat = "identity", color = "#555555") +
       theme_classic() +
       theme(axis.title.y = element_text(face = "bold", size = 12),
@@ -105,8 +165,26 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count") {
           mutate(n = n/sum(n)) %>%
           ungroup()
       }
-      ggp <- ggp %>%
-        ggplot(aes(x = !!by, y = n, fill = !!var)) +
+      if (is.logical(order)) {
+        if (order) {
+          ggp <- ggp %>%
+            mutate(!!by := str_wrap(!!by, strwidth)) %>%
+            ggplot(aes(x = reorder(!!by, desc(n)), y = n, fill = !!var))
+        } else {
+          ggp <- ggp %>%
+            mutate(!!by := str_wrap(!!by, strwidth)) %>%
+            ggplot(aes(x = !!by, y = n, fill = !!var))
+        }
+      } else if (is.character(order)) {
+        ggp <- ggp %>%
+          mutate(!!by := factor(str_wrap(!!by, strwidth),
+                                levels = str_wrap(order, strwidth),
+                                ordered = TRUE)) %>%
+          ggplot(aes(x = !!by, y = n, fill = !!var))
+      } else {
+        stop("order argument should be either a logical or a character vector")
+      }
+      ggp <- ggp +
         geom_bar(stat = "identity", color = "#555555", position = "dodge") +
         theme_classic() +
         theme(axis.title.y = element_text(face = "bold", size = 12),

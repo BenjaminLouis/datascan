@@ -4,8 +4,11 @@
 \alias{report_options}
 \title{Config options for automatic report}
 \usage{
-report_options(.title = "Exploratory Data Analysis report",
-  .author = "John Doe", .date = Sys.Date())
+report_options(
+  .title = "Exploratory Data Analysis report",
+  .author = "John Doe",
+  .date = Sys.Date()
+)
 }
 \arguments{
 \item{.title}{report title}
