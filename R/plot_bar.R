@@ -63,7 +63,7 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
         if (order) {
           ggp <- ggp %>%
             mutate(!!var := str_wrap(!!var, strwidth)) %>%
-            ggplot(aes(x = reorder(!!var, desc(n)), y = n, fill = !!var))
+            ggplot(aes(x = reorder(!!var, n), y = n, fill = !!var))
         } else {
           ggp <- ggp %>%
             mutate(!!var := str_wrap(!!var, strwidth)) %>%
