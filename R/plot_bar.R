@@ -4,9 +4,12 @@
 #' @param .cat unquoted name of a categrocial column
 #' @param .by (optional) unquoted name of a categrocial column
 #' @param nas logical. Should missing values be considered as group on x-axis
-#' @param bytype only if \code{.by} argument is given. Either "count" or "percent" for y-axis
+#' @param type  Either "count" or "percent" for y-axis
 #' @param strwidth with of labels (for \code{stringr::str_wrap})
 #' @param order (lgl) should the group be ordered by frequency? (chr) Order of .cat groups in barplot
+#' @param autoflip (lgl) flip coordinates if there is more than 5 groups
+#' @param maxp only if \code{type = "percent"}. Max percentage of y axis
+#' @param ystep step for y-axis. \code{ystep} is multiplied by \code(10^(nchar(maxy) - 2)) where maxy is the max of y values
 #'
 #' @return a ggplot
 #' @export
@@ -21,7 +24,8 @@
 #' @examples
 #' library(dplyr)
 #' plot_bar(starwars, eye_color)
-plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 30, order = TRUE) {
+plot_bar <- function(.data, .cat, .by, nas = TRUE, type = "count", strwidth = 30, order = TRUE, autoflip = TRUE,
+                     maxp = 1, ystep = 5) {
 
   var <- enquo(.cat)
 
@@ -55,10 +59,21 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
 
 
   #Flip coordinate if there is more than 5 groups
-  if (ngrp > 5) {
+  if (ngrp > 5 & autoflip) {
     if (missing(.by)) {
+      # Count groups
       ggp <- df %>%
         count(!!var)
+      # Scale
+      maxy <- ggp %>% pull(n) %>% max()
+      den <- ystep*10^(nchar(maxy) - 2)
+      ymax <- ceiling(maxy/den)*den
+      # Percent
+      if (type == "percent") {
+        ggp <- ggp %>%
+          mutate(n = n/sum(n))
+      }
+      # Order of bars
       if (is.logical(order)) {
         if (order) {
           ggp <- ggp %>%
@@ -78,6 +93,7 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
       } else {
         stop("order argument should be either a logical or a character vector")
       }
+      # Plots
       ggp <- ggp +
         geom_bar(show.legend = FALSE, stat = "identity", color = "#555555") +
         coord_flip() +
@@ -90,12 +106,18 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
       ggp <- df %>%
         count(!!var, !!by, .drop = FALSE) %>%
         complete(!!var, !!by, fill = list(n = 0))
-      if (bytype == "percent") {
+      # Scale
+      maxy <- ggp %>% pull(n) %>% max()
+      den <- ystep*10^(nchar(maxy) - 2)
+      ymax <- ceiling(maxy/den)*den
+      # Percent
+      if (type == "percent") {
         ggp <- ggp %>%
           group_by(!!by) %>%
           mutate(n = n/sum(n)) %>%
           ungroup()
       }
+      # Order of bars
       if (is.logical(order)) {
         if (order) {
           ggp <- ggp %>%
@@ -115,6 +137,7 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
       } else {
         stop("order argument should be either a logical or a character vector")
       }
+      # Plots
       ggp <- ggp +
         geom_bar(stat = "identity", color = "#555555", position = "dodge") +
         coord_flip() +
@@ -124,11 +147,21 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
               axis.text.y = element_text(face = "bold", size = textsize),
               axis.text.x = element_text(face = "bold", size = 10))
     }
+  #Don't fip coordinates
   } else {
     if (missing(.by)) {
       ggp <- df %>%
-        count(!!var) %>%
-        mutate(!!var := str_wrap(!!var, strwidth))
+        count(!!var)
+      # Scale
+      maxy <- ggp %>% pull(n) %>% max()
+      den <- ystep*10^(nchar(maxy) - 2)
+      ymax <- ceiling(maxy/den)*den
+      # Percent
+      if (type == "percent") {
+        ggp <- ggp %>%
+          mutate(n = n/sum(n))
+      }
+      # Order of bars
       if (is.logical(order)) {
         if (order) {
           ggp <- ggp %>%
@@ -148,6 +181,7 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
       } else {
         stop("order argument should be either a logical or a character vector")
       }
+      # Plots
       ggp <- ggp +
       geom_bar(show.legend = FALSE, stat = "identity", color = "#555555") +
       theme_classic() +
@@ -156,15 +190,22 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
             axis.text.x = element_text(face = "bold", size = textsize),
             axis.text.y = element_text(face = "bold", size = 10))
     } else {
+      # Count groups
       ggp <- df %>%
         count(!!var, !!by, .drop = FALSE) %>%
         complete(!!var, !!by, fill = list(n = 0))
-      if (bytype == "percent") {
+      # Scale
+      maxy <- ggp %>% pull(n) %>% max()
+      den <- ystep*10^(nchar(maxy) - 2)
+      ymax <- ceiling(maxy/den)*den
+      # Percent
+      if (type == "percent") {
         ggp <- ggp %>%
           group_by(!!by) %>%
           mutate(n = n/sum(n)) %>%
           ungroup()
       }
+      # Order of bars
       if (is.logical(order)) {
         if (order) {
           ggp <- ggp %>%
@@ -184,6 +225,7 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
       } else {
         stop("order argument should be either a logical or a character vector")
       }
+      # plots
       ggp <- ggp +
         geom_bar(stat = "identity", color = "#555555", position = "dodge") +
         theme_classic() +
@@ -195,15 +237,20 @@ plot_bar <- function(.data, .cat, .by, nas = TRUE, bytype = "count", strwidth = 
   }
 
   ggp <- ggp +
-    labs(y = sub("^.", toupper(substr(bytype, 1, 1)), bytype))  +
+    labs(y = sub("^.", toupper(substr(type, 1, 1)), type))  +
     scale_x_discrete(na.translate = nas) +
     scale_fill_viridis_d()
-  if (bytype == "percent") {
+  if (type == "percent") {
     ggp +
-      scale_y_continuous(limits = c(0, NA), expand = c(0, 0), labels = function(x) paste0(x*100, "%"))
+      scale_y_continuous(limits = c(0, maxp),
+                         breaks = seq(0, maxp, 0.2),
+                         expand = c(0, 0),
+                         labels = function(x) paste0(x*100, "%"))
   } else {
     ggp +
-      scale_y_continuous(limits = c(0, NA), expand = c(0, 0))
+      scale_y_continuous(limits = c(0, ymax), #max(c(ymax, (maxy + den)))),
+                         breaks = seq(0, ymax, den),
+                         expand = c(0, 0))
   }
 
 
