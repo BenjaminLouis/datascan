@@ -23,7 +23,7 @@ plot_count <- function(.data, .cat1, .cat2) {
 
   # Transform NA as a group to avoid warning
   df <- select(.data, !!varx, !!vary) %>%
-    mutate_all(funs(map_chr(., ~if (is.na(.x)) {"NA"} else {.x})))
+    mutate_all(~map_chr(., ~if (is.na(.x)) {"NA"} else {.x}))
 
   limx <- sort(unique(pull(df, !!varx)))
   limy <- sort(unique(pull(df, !!vary)), decreasing = TRUE)

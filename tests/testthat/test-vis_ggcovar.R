@@ -13,7 +13,7 @@ test_that("vis_ggcovar works", {
   expect_error(vis_ggcovar(starwars, height),
                "All target columns should be categorical")
 
-  expect_warning(vis_ggcovar(starwars, hair_color, skin_color, eye_color, gender, homeworld, species),
+  expect_warning(vis_ggcovar(starwars, hair_color, skin_color, eye_color, gender, homeworld, species, sex),
                  "All categorical columns were targets. Argument 'dots' was ignored")
 
 })

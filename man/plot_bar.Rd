@@ -9,9 +9,12 @@ plot_bar(
   .cat,
   .by,
   nas = TRUE,
-  bytype = "count",
+  type = "count",
   strwidth = 30,
-  order = TRUE
+  order = TRUE,
+  autoflip = TRUE,
+  maxp = 1,
+  ystep = 5
 )
 }
 \arguments{
@@ -23,11 +26,17 @@ plot_bar(
 
 \item{nas}{logical. Should missing values be considered as group on x-axis}
 
-\item{bytype}{only if \code{.by} argument is given. Either "count" or "percent" for y-axis}
+\item{type}{Either "count" or "percent" for y-axis}
 
 \item{strwidth}{with of labels (for \code{stringr::str_wrap})}
 
 \item{order}{(lgl) should the group be ordered by frequency? (chr) Order of .cat groups in barplot}
+
+\item{autoflip}{(lgl) flip coordinates if there is more than 5 groups}
+
+\item{maxp}{only if \code{type = "percent"}. Max percentage of y axis}
+
+\item{ystep}{step for y-axis. \code{ystep} is multiplied by \code{10^(nchar(maxy) - 2)} where maxy is the max of y values}
 }
 \value{
 a ggplot

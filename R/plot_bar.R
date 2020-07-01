@@ -9,7 +9,7 @@
 #' @param order (lgl) should the group be ordered by frequency? (chr) Order of .cat groups in barplot
 #' @param autoflip (lgl) flip coordinates if there is more than 5 groups
 #' @param maxp only if \code{type = "percent"}. Max percentage of y axis
-#' @param ystep step for y-axis. \code{ystep} is multiplied by \code(10^(nchar(maxy) - 2)) where maxy is the max of y values
+#' @param ystep step for y-axis. \code{ystep} is multiplied by \code{10^(nchar(maxy) - 2)} where maxy is the max of y values
 #'
 #' @return a ggplot
 #' @export
